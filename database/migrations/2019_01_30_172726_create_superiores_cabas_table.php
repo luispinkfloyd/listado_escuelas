@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSecundariosCabasTable extends Migration
+class CreateSuperioresCabasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSecundariosCabasTable extends Migration
      */
     public function up()
     {
-        Schema::create('secundarios_cabas', function (Blueprint $table) {
+        Schema::create('superiores_cabas', function (Blueprint $table) {
             $table->increments('id');
 			$table->string('jurisdiccion')->default('Ciudad de Buenos Aires');
 			$table->bigInteger('cue');
@@ -38,6 +38,6 @@ class CreateSecundariosCabasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('secundarios_cabas');
+        Schema::dropIfExists('superiores_cabas');
     }
 }

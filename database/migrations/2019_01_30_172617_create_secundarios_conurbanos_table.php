@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSecundariosCabasTable extends Migration
+class CreateSecundariosConurbanosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class CreateSecundariosCabasTable extends Migration
      */
     public function up()
     {
-        Schema::create('secundarios_cabas', function (Blueprint $table) {
+        Schema::create('secundarios_conurbanos', function (Blueprint $table) {
             $table->increments('id');
-			$table->string('jurisdiccion')->default('Ciudad de Buenos Aires');
+			$table->string('jurisdiccion')->default('Buenos Aires');
 			$table->bigInteger('cue');
 			$table->string('nombre');
 			$table->string('sector');
 			$table->string('ambito');
 			$table->string('domicilio');
-			$table->integer('cp');
+			$table->integer('cp')->nullable();
 			$table->string('telefono')->nullable();
 			$table->bigInteger('codigo_localidad');
-			$table->string('localidad')->default('Ciudad de Buenos Aires');
-			$table->string('comuna');
+			$table->string('localidad');
+			$table->string('partido');
 			$table->string('mail')->nullable();
             $table->timestamps();
         });
@@ -38,6 +38,6 @@ class CreateSecundariosCabasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('secundarios_cabas');
+        Schema::dropIfExists('secundarios_conurbanos');
     }
 }
