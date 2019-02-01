@@ -33,10 +33,10 @@ Route::resource('secundario_conurbano','SecundarioConurbanoController');
 
 Route::resource('secundario_caba','SecundarioCabaController');
 
-Route::get('busqueda_secundario_caba','SecundarioCabaController@search')->name('busqueda_secundario_caba');
+Route::get('busqueda_secundarios_caba','SecundarioCabaController@search')->name('busqueda_secundarios_caba');
 
 Route::get('busqueda_superiores_caba','SuperiorCabaController@search')->name('busqueda_superiores_caba');
 
-Route::get('busqueda_secundario_conurbano','SecundarioConurbanoController@search')->name('busqueda_secundario_conurbano');
+Route::get('busqueda_secundarios_conurbano','SecundarioConurbanoController@search')->name('busqueda_secundarios_conurbano');
 
-Route::get('busqueda_superior_conurbano','SuperiorConurbanoController@search')->name('busqueda_superior_conurbano');
+Route::get('busqueda_superiores_conurbano','SuperiorConurbanoController@search')->name('busqueda_superiores_conurbano');

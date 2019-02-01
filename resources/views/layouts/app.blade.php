@@ -18,6 +18,19 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+		.bordeado{
+			border: 1px #FF0004 dotted;	
+		}
+		
+		.div-boton-filtros{
+		  width: 100%;
+		  display: flex;
+		  justify-content: center;
+		  margin:auto;
+		}
+		
+	</style>
 </head>
 <body>
     <div id="app">

@@ -17,13 +17,13 @@ class SuperiorCabaController extends Controller
     {
         $superiores_caba = superiores_caba::orderBy('nombre')->paginate(8);
 		
-		$comunas = DB::table('secundarios_cabas')
+		$comunas = DB::table('superiores_cabas')
 					->select('comuna')
 					->groupBy('comuna')
-					->orderByRaw('substring(comuna,8,10)::int asc')
+					->orderBy('comuna')
 					->get();
 		
-		return view('superiorcaba', ['superiores_caba' => $superiores_caba, 'comunas' => $comunas]);
+		return view('superiorcaba',['superiores_caba' => $superiores_caba, 'comunas' => $comunas]);
     }
 
     
@@ -32,77 +32,56 @@ class SuperiorCabaController extends Controller
 	{
 		
 		
+		$superiores_caba = superiores_caba::orderBy('nombre');
+		
 		$comuna_selected = NULL;
 		
 		$sector_selected = NULL;
 		
 		$busqueda = NULL;
 		
+		$comunas = DB::table('superiores_cabas')
+					->select('comuna')
+					->groupBy('comuna')
+					->orderBy('comuna')
+					->get();
+		
+			
+		if(isset($request->comuna) && $request->comuna != 'Todas') {
+			
+			$comuna_selected = $request->comuna;
+			
+			$superiores_caba = $superiores_caba->where('comuna',$request->comuna);
+			
+		}
+		
+		if(isset($request->sector) && $request->sector != 'Todos'){ 
+			
+			$sector_selected = $request->sector;
+			
+			$superiores_caba = $superiores_caba->where('sector',$request->sector);
+			
+		}
+		
+		/*
+		$superiores_caba = $superiores_caba->paginate(8);
+		
+		print_r($superiores_caba);
+		exit;
+		*/
+	
 		
 		if(isset($request->busqueda)){
 			
 			$busqueda = $request->busqueda;
 			
-			$superiores_caba = DB::table('superiores_cabas')->whereRaw("nombre::text ilike '%".$request->busqueda."%' or domicilio::text ilike '%".$request->busqueda."%' or mail::text ilike '%".$request->busqueda."%' or telefono::text ilike '%".$request->busqueda."%' or cue::text ilike '%".$request->busqueda."%' or cp::text ilike '%".$request->busqueda."%' or codigo_localidad::text ilike '%".$request->busqueda."%'")->paginate(8);
+			$superiores_caba = $superiores_caba->whereRaw("(f_limpiar_acentos(nombre)::text ilike f_limpiar_acentos('%".$request->busqueda."%') or f_limpiar_acentos(domicilio)::text ilike f_limpiar_acentos('%".$request->busqueda."%') or mail::text ilike '%".$request->busqueda."%' or telefono::text ilike '%".$request->busqueda."%' or cue::text ilike '%".$request->busqueda."%' or cp::text ilike '%".$request->busqueda."%' or codigo_localidad::text ilike '%".$request->busqueda."%')");
 															
-			if(isset($request->comuna) && !isset($request->sector)) {
-			
-				$comuna_selected = $request->comuna;
-				
-				$superiores_caba = DB::table('superiores_cabas')->whereRaw("comuna = '".$request->comuna."' and (nombre::text ilike '%".$request->busqueda."%' or domicilio::text ilike '%".$request->busqueda."%' or mail::text ilike '%".$request->busqueda."%' or telefono::text ilike '%".$request->busqueda."%' or cue::text ilike '%".$request->busqueda."%' or cp::text ilike '%".$request->busqueda."%' or codigo_localidad::text ilike '%".$request->busqueda."%')")->paginate(8);
-				
-			}
-			
-			if(isset($request->sector)){ 
-				
-				$sector_selected = $request->sector;
-				
-				$superiores_caba = DB::table('superiores_cabas')->whereRaw("sector = '".$request->sector."' and (nombre::text ilike '%".$request->busqueda."%' or domicilio::text ilike '%".$request->busqueda."%' or mail::text ilike '%".$request->busqueda."%' or telefono::text ilike '%".$request->busqueda."%' or cue::text ilike '%".$request->busqueda."%' or cp::text ilike '%".$request->busqueda."%' or codigo_localidad::text ilike '%".$request->busqueda."%')")->paginate(8);
-			
-				if(isset($request->comuna)){
-					
-					$comuna_selected = $request->comuna;
-					
-					$superiores_caba = DB::table('superiores_cabas')->whereRaw("sector = '".$request->sector."' and comuna = '".$request->comuna."' and (nombre::text ilike '%".$request->busqueda."%' or domicilio::text ilike '%".$request->busqueda."%' or mail::text ilike '%".$request->busqueda."%' or telefono::text ilike '%".$request->busqueda."%' or cue::text ilike '%".$request->busqueda."%' or cp::text ilike '%".$request->busqueda."%' or codigo_localidad::text ilike '%".$request->busqueda."%')")->paginate(8);
-				
-				}
-				
-			}
-			
-		}else{
-			
-			if(isset($request->comuna) && !isset($request->sector)) {
-				
-				$comuna_selected = $request->comuna;
-				
-				$superiores_caba = superiores_caba::Where('comuna',$request->comuna)->paginate(8);
-				
-			}
-			
-			if(isset($request->sector)){ 
-				
-				$sector_selected = $request->sector;
-				
-				$superiores_caba = superiores_caba::Where('sector',$request->sector)->paginate(8);
-			
-				if(isset($request->comuna)){
-					
-					$comuna_selected = $request->comuna;
-					
-					$superiores_caba = superiores_caba::Where('sector',$request->sector)->where('comuna',$request->comuna)->paginate(8);
-				}
-				
-			}
 		}
 		
-		$comunas = DB::table('superiores_cabas')
-					->select('comuna')
-					->groupBy('comuna')
-					->orderByRaw('substring(comuna,8,10)::int asc')
-					->get();
+		$superiores_caba = $superiores_caba->paginate(8);
 		
-		
-		return view('superiorcaba',['superiores_caba' => $superiores_caba, 'comunas' => $comunas, 'comuna_selected' => $comuna_selected, 'sector_selected' => $sector_selected,'busqueda' => $busqueda]);
+		return view('superiorcaba',['superiores_caba' => $superiores_caba, 'comunas' => $comunas, 'comuna_selected' => $comuna_selected, 'sector_selected' => $sector_selected, 'busqueda' => $busqueda]);
 		
 	}
 	
