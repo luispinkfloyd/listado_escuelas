@@ -11,7 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
+    
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -19,6 +19,11 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
+		.col-sm-auto {
+			 width: auto;
+			 padding-right: 50px;     
+		}
+		
 		.bordeado{
 			border: 1px #FF0004 dotted;	
 		}
@@ -29,7 +34,6 @@
 		  justify-content: center;
 		  margin:auto;
 		}
-		
 	</style>
 </head>
 <body>

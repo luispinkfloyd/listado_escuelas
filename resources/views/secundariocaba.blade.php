@@ -1,90 +1,143 @@
 @extends('layouts.app')
 @section('content')
-<div class="container jumbotron" style="background-color:#1B3146">
-  <div class="row">
-      <div class="col">
-          <div class="container" style="color:#FFFFFF;">
-          	<h1 class="display-4">Escuelas Secundarias CABA</h1>
-            <p class="lead" style="padding-top:10px"><b>Jurisdicción:</b> <small>Ciudad de Buenos Aires</small></p>
-            <p class="lead"><b>Ámbito:</b> <small>Urbano</small></p>
-            <p class="lead"><b>Localidad:</b> <small>Ciudad de Buenos Aires</small></p>
-          </div>
-      </div>
-      <div class="col">
-      	  <div class="container" style="padding-top:15px">
-              <form action="{{ route('busqueda_secundario_caba') }}" method="get">
-              	<div class="input-group" style="padding-top:15px;max-width:450px">	 
-                	<input class="form-control" type="search" placeholder="Buscar" aria-label="Buscar" name="busqueda" <?php if(isset($busqueda)){ echo 'value="'.$busqueda.'"';}?>>
-                </div>
-                <div class="input-group" style="padding-top:30px;max-width:450px">
-                	 <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect01">Sector</label>
-                     </div>
-                    <select class="custom-select" id="inputGroupSelect01" name="sector">
-                        <option disabled selected value>--Seleccione--</option>
-                        <option <?php if(isset($sector_selected)){if($sector_selected === 'Privado'){ echo 'selected';}} ?>>Privado</option>
-                        <option <?php if(isset($sector_selected)){if($sector_selected === 'Estatal'){ echo 'selected';}} ?>>Estatal</option>
-                    </select>
-                </div>
-                <div class="input-group" style="padding-top:30px;max-width:450px">
-                	 <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect01">Comuna</label>
-                     </div>
-                    <select class="custom-select" id="inputGroupSelect01" name="comuna">
-                        <option disabled selected value>--Seleccione--</option>
-                        @foreach($comunas as $comuna)
-                        	<option <?php if(isset($comuna_selected)){if($comuna_selected === $comuna->comuna){ echo 'selected';}} ?>>{{$comuna->comuna}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="container" style="padding-top:20px">
-                    <div class="row">
-                        <div class="col text-left">
-                            <input class="btn btn-outline-success" type="submit" value="Buscar">
-                            </form>
-                        </div>
-                        <div class="col text-center">
-                            <a href="{{ route('secundario_caba.index') }}" class="btn btn-outline-danger">Limpiar Búsqueda</a>
-                        </div>
+
+<?php
+$collapse = 'collapse';
+if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected) || isset($localidad_selected)) $collapse = '';
+?>
+<form action="{{ route('busqueda_secundarios_caba') }}" method="get">
+<div class="container jumbotron" style="background-color:#283148;padding:10px 0px 0px 0px">
+	<div class="row">
+		<div class="col-sm-auto">
+			<div class="container" style="color:#FFFFFF;">
+          		<h1 class="display-5">Escuelas Secundarias <small>CABA</small></h1>
+            	<p class="lead font-weight-bold" style="padding-top:5px">Jurisdicción: <small class="font-weight-normal">Ciudad de Buenos Aires</small></p>
+                <div class="row">
+                	<div class="col-sm-auto">
+                		<p class="lead font-weight-bold" style="padding-top:5px">Ámbito: <small class="font-weight-normal">Urbano</small></p>
+                    </div>
+                    <div class="col-sm-auto">
+                		<p class="lead font-weight-bold" style="padding-top:5px">Localidad: <small class="font-weight-normal">Ciudad de Buenos Aires</small></p>
                     </div>
                 </div>
-          </div>
+        	</div>
+    	</div>
+		<div class="col-sm">
+      		<div class="container">
+          		<div class="input-group" style="padding-top:20px">
+                  <input class="form-control" type="search" placeholder="Buscar por nombre, domicilio, CP o mail" aria-label="Buscar" name="busqueda" <?php if(isset($busqueda)){ echo 'value="'.$busqueda.'"';}?>>
+                  <div class="input-group-append">
+                    <input class="btn btn-outline-success" type="submit" value="Buscar">
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+      <div class="form-row" style="height:70px">
+        <div class="form-group div-boton-filtros">
+            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapsefiltros" aria-expanded="false" aria-controls="collapsefiltros" style="margin-left:10px">Filtros</button>
+            <div class="col">
+            </div>
+            @if(isset($busqueda))
+            <a href="{{ route('secundario_caba.index') }}" class="btn btn-outline-danger" style="margin-right:10px">Limpiar Búsqueda</a>
+            @endif
+        </div>
       </div>
-  </div>
+    </div>
+    <div class="{{$collapse}}" id="collapsefiltros">
+    	<div class="form-row">
+            <div class="form-group col-md">
+                <div class="container">
+                    <div class="input-group">
+                         <div class="input-group-prepend">
+                            <label class="input-group-text" for="sector"><b>Sector</b></label>
+                         </div>
+                        <select class="custom-select" id="sector" name="sector" onChange="this.form.submit()">
+                            <option disabled selected value>--Seleccione--</option>
+                            <option <?php if(isset($sector_selected)){if($sector_selected === 'Todos'){ echo 'selected';}} ?>>Todos</option>
+                            <option <?php if(isset($sector_selected)){if($sector_selected === 'Privado'){ echo 'selected';}} ?>>Privado</option>
+                            <option <?php if(isset($sector_selected)){if($sector_selected === 'Estatal'){ echo 'selected';}} ?>>Estatal</option>
+                        </select>
+                    </div>
+                 </div>
+             </div>
+             <div class="form-group col-md">
+                 <div class="container">
+                    <div class="input-group">
+                         <div class="input-group-prepend">
+                            <label class="input-group-text" for="comuna"><b>Comuna</b></label>
+                         </div>
+                        <select class="custom-select" id="comuna" name="comuna" onChange="this.form.submit()">
+                            <option disabled selected value>--Seleccione--</option>
+                            <option <?php if(isset($comuna_selected)){if($comuna_selected === 'Todas'){ echo 'selected';}} ?>>Todas</option>
+                            @foreach($comunas as $comuna)
+                                <option <?php if(isset($comuna_selected)){if($comuna_selected === $comuna->comuna){ echo 'selected';}} ?>>{{$comuna->comuna}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
 </div>
-<div class="container" style="overflow:auto">
-    <table class="table table-sm table-hover table-bordered" style="white-space:nowrap">
-      <thead class="thead-dark">
-        <tr>
-            <th scope="col">cue</th>	
-            <th scope="col">nombre</th>	
-            <th scope="col">sector</th>
-            <th scope="col">domicilio</th>
-            <th scope="col">cp</th>
-            <th scope="col">telefono</th>
-            <th scope="col">codigo_localidad</th>
-            <th scope="col">comuna</th>
-            <th scope="col">mail</th>
-        </tr>
-      </thead>
-      <tbody>
+@if(isset($secundarios_caba))
+    @if(!empty($secundarios_caba[0]))
+    <div class="container jumbotron" style="padding:5px;margin:auto;width:95%;background-color:rgba(255,255,255,1.00)">    
+        <hr style="border:#3c415e solid 1px">
         @foreach($secundarios_caba as $secundario_caba)
-        <tr>
-          <td>{{$secundario_caba->cue}}</td>
-          <td>{{$secundario_caba->nombre}}</td>
-          <td>{{$secundario_caba->sector}}</td>
-          <td>{{$secundario_caba->domicilio}}</td>
-          <td>{{$secundario_caba->cp}}</td>
-          <td>{{$secundario_caba->telefono}}</td>
-          <td>{{$secundario_caba->codigo_localidad}}</td>
-          <td>{{$secundario_caba->comuna}}</td>
-          <td>{{$secundario_caba->mail}}</td>
-        </tr>
+                <div class="row form-group" style="padding-left:10px">
+                    <div class="col-sm-auto form-group">
+                        <label class="font-italic" style="color:#738598">Nombre:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_caba->nombre}}</b>
+                    </div>
+                    <div class="col-sm-auto">
+                        <label class="font-italic" style="color:#738598">CUE:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_caba->cue}}</b>
+                    </div>
+                    <div class="col-sm-auto">
+                        <label class="font-italic" style="color:#738598">Sector:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_caba->sector}}</b>
+                    </div>
+                </div>
+                <div class="row form-group" style="padding-left:10px">
+                    <div class="col-sm-auto form-group">
+                        <label class="font-italic" style="color:#738598">Domicilio:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_caba->domicilio}}</b>
+                    </div>
+                    <div class="col-sm-auto form-group">
+                        <label class="font-italic" style="color:#738598">CP:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_caba->cp}}</b>
+                    </div>
+                    <div class="col-auto form-group">
+                        <label class="font-italic" style="color:#738598">Cód. Localidad:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_caba->codigo_localidad}}</b>
+                    </div>
+                    <div class="col-sm-auto">
+                        <label class="font-italic" style="color:#738598">Comuna:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_caba->comuna}}</b>
+                    </div>
+                </div>
+                 <div class="row" style="padding-left:10px">  
+                    <div class="col-sm-auto form-group">
+                        <label class="font-italic" style="color:#738598">Teléfono:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_caba->telefono}}</b>
+                    </div>
+                    <div class="col-sm-auto form-group">
+                        <label class="font-italic" style="color:#738598">Mail:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_caba->mail}}</b>
+                    </div>
+                    
+                </div>
+            <hr style="border:#3c415e solid 1px">
         @endforeach
-      </tbody>
-    </table>
-</div>
-<div class="container" style="padding-top:20px">
-    {{$secundarios_caba->appends(Illuminate\Support\Facades\Input::except('page'))->links()}}
-</div>
+        <div class="container" style="padding-top:20px;margin:auto">
+            {{$secundarios_caba->appends(Illuminate\Support\Facades\Input::except('page'))->links()}}
+        </div>
+    </div>
+    @else    
+       <div class="container jumbotron" style="margin:auto;width:95%;background-color:rgba(255,255,255,1.00)">    
+            <hr style="border:#3c415e solid 1px">
+            <p><h4 class="text-center font-weight-bold">No se encontraron resultados con el parámetro "{{$busqueda}}" <?php if(isset($sector_selected) && $sector_selected != 'Todos'){ echo ' en el sector '.$sector_selected;} if(isset($comuna_selected) && $comuna_selected != 'Todas'){ echo ' en la '.$comuna_selected; } ?>.</h4></p>
+            <hr style="border:#3c415e solid 1px">
+        </div> 
+    @endif
+@else
+	<div class="container jumbotron" style="margin:auto;width:95%;background-color:rgba(255,255,255,1.00)">    
+    	<hr style="border:#3c415e solid 1px">
+        <p><h4 class="text-center font-weight-bold">Por favor, ingrese un parámetro de busqueda para mostrar resultados.</h4></p>
+        <hr style="border:#3c415e solid 1px">
+    </div> 
+@endif
 @endsection

@@ -8,7 +8,13 @@ use DB;
 
 class SuperiorConurbanoController extends Controller
 {
-    /**
+    
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
+	
+	/**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -36,7 +42,7 @@ class SuperiorConurbanoController extends Controller
 	{
 		
 		
-		$secundarios_conurbano = secundarios_conurbano::orderBy('nombre');
+		$superiores_conurbano = superiores_conurbano::orderBy('nombre');
 		
 		$partido_selected = NULL;
 		
@@ -48,32 +54,35 @@ class SuperiorConurbanoController extends Controller
 		
 		$busqueda = NULL;
 		
-		$partidos = DB::table('secundarios_conurbanos')
+		$partidos = DB::table('superiores_conurbanos')
 					->select('partido')
 					->groupBy('partido')
 					->orderBy('partido')
 					->get();
 					
-		$localidades = DB::table('secundarios_conurbanos')
-					->select('localidad')
-					->groupBy('localidad')
-					->orderBy('localidad')
-					->get();
+		$localidades = DB::table('superiores_conurbanos')
+					->select('localidad');
+					
 		
 			
 		  if(isset($request->partido) && $request->partido != 'Todos') {
 			  
 			  $partido_selected = $request->partido;
 			  
-			  $secundarios_conurbano = $secundarios_conurbano->where('partido',$request->partido);
+			  $superiores_conurbano = $superiores_conurbano->where('partido',$request->partido);
+			  
+			  $localidades = $localidades->where('partido',$request->partido);
 			  
 		  }
+		  
+		  
+		  $localidades = $localidades->groupBy('localidad')->orderBy('localidad')->get();
 		  
 		  if(isset($request->sector) && $request->sector != 'Todos'){ 
 			  
 			  $sector_selected = $request->sector;
 			  
-			  $secundarios_conurbano = $secundarios_conurbano->where('sector',$request->sector);
+			  $superiores_conurbano = $superiores_conurbano->where('sector',$request->sector);
 			  
 		  }
 		  
@@ -81,7 +90,7 @@ class SuperiorConurbanoController extends Controller
 			  
 			  $localidad_selected = $request->localidad;
 			  
-			  $secundarios_conurbano = $secundarios_conurbano->where('localidad',$request->localidad);
+			  $superiores_conurbano = $superiores_conurbano->where('localidad',$request->localidad);
 			  
 		  }
 		  
@@ -89,7 +98,7 @@ class SuperiorConurbanoController extends Controller
 			  
 			  $ambito_selected = $request->ambito;
 			  
-			  $secundarios_conurbano = $secundarios_conurbano->where('ambito',$request->ambito);
+			  $superiores_conurbano = $superiores_conurbano->where('ambito',$request->ambito);
 			  
 		  }
 	  
@@ -97,13 +106,13 @@ class SuperiorConurbanoController extends Controller
 			  
 			  $busqueda = $request->busqueda;
 			  
-			  $secundarios_conurbano = $secundarios_conurbano->whereRaw("(f_limpiar_acentos(nombre)::text ilike f_limpiar_acentos('%".$request->busqueda."%') or f_limpiar_acentos(domicilio)::text ilike f_limpiar_acentos('%".$request->busqueda."%') or mail::text ilike '%".$request->busqueda."%' or telefono::text ilike '%".$request->busqueda."%' or cue::text ilike '%".$request->busqueda."%' or cp::text ilike '%".$request->busqueda."%' or codigo_localidad::text ilike '%".$request->busqueda."%')");
+			  $superiores_conurbano = $superiores_conurbano->whereRaw("(f_limpiar_acentos(nombre)::text ilike f_limpiar_acentos('%".$request->busqueda."%') or f_limpiar_acentos(domicilio)::text ilike f_limpiar_acentos('%".$request->busqueda."%') or mail::text ilike '%".$request->busqueda."%' or telefono::text ilike '%".$request->busqueda."%' or cue::text ilike '%".$request->busqueda."%' or cp::text ilike '%".$request->busqueda."%' or codigo_localidad::text ilike '%".$request->busqueda."%')");
 															  
 		  }
 		
-		$secundarios_conurbano = $secundarios_conurbano->paginate(8);
+		$superiores_conurbano = $superiores_conurbano->paginate(8);
 		
-		return view('secundarioconurbano',['secundarios_conurbano' => $secundarios_conurbano, 'partidos' => $partidos, 'localidades' => $localidades, 'partido_selected' => $partido_selected, 'sector_selected' => $sector_selected, 'localidad_selected' => $localidad_selected, 'ambito_selected' => $ambito_selected,'busqueda' => $busqueda]);
+		return view('superiorconurbano',['superiores_conurbano' => $superiores_conurbano, 'partidos' => $partidos, 'localidades' => $localidades, 'partido_selected' => $partido_selected, 'sector_selected' => $sector_selected, 'localidad_selected' => $localidad_selected, 'ambito_selected' => $ambito_selected,'busqueda' => $busqueda]);
 		
 		
 	}

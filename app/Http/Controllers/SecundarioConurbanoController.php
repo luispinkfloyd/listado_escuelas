@@ -8,7 +8,13 @@ use DB;
 
 class SecundarioConurbanoController extends Controller
 {
-    /**
+    
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
+	
+	/**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -55,11 +61,8 @@ class SecundarioConurbanoController extends Controller
 					->orderBy('partido')
 					->get();
 					
-		$localidades = DB::table('secundarios_conurbanos')
-					->select('localidad')
-					->groupBy('localidad')
-					->orderBy('localidad')
-					->get();
+		$localidades = DB::table('secundarios_conurbanos')->select('localidad');
+					
 		
 			
 		if(isset($request->partido) && $request->partido != 'Todos') {
@@ -68,7 +71,13 @@ class SecundarioConurbanoController extends Controller
 			
 			$secundarios_conurbano = $secundarios_conurbano->where('partido',$request->partido);
 			
+			$localidades = $localidades->where('partido',$request->partido);
+			
 		}
+		
+		
+		$localidades = $localidades->groupBy('localidad')->orderBy('localidad')->get();
+		
 		
 		if(isset($request->sector) && $request->sector != 'Todos'){ 
 			
