@@ -22,7 +22,7 @@ class SuperiorCabaController extends Controller
      */
     public function index()
     {
-        $superiores_caba = superiores_caba::orderBy('nombre')->paginate(8);
+        //$superiores_caba = superiores_caba::orderBy('nombre')->paginate(8);
 		
 		$comunas = DB::table('superiores_cabas')
 					->select('comuna')
@@ -30,7 +30,7 @@ class SuperiorCabaController extends Controller
 					->orderBy('comuna')
 					->get();
 		
-		return view('superiorcaba',['superiores_caba' => $superiores_caba, 'comunas' => $comunas]);
+		return view('superiorcaba',['comunas' => $comunas]);
     }
 
     
@@ -60,6 +60,10 @@ class SuperiorCabaController extends Controller
 			
 			$superiores_caba = $superiores_caba->where('comuna',$request->comuna);
 			
+		}elseif(isset($request->comuna) && $request->comuna === 'Todas'){
+			
+			$comuna_selected = 'Todas';
+			
 		}
 		
 		if(isset($request->sector) && $request->sector != 'Todos'){ 
@@ -68,7 +72,13 @@ class SuperiorCabaController extends Controller
 			
 			$superiores_caba = $superiores_caba->where('sector',$request->sector);
 			
+		}elseif(isset($request->sector) && $request->sector === 'Todos'){
+			
+			$sector_selected = 'Todos';
+			
 		}
+		
+		
 		
 		/*
 		$superiores_caba = $superiores_caba->paginate(8);
@@ -78,7 +88,7 @@ class SuperiorCabaController extends Controller
 		*/
 	
 		
-		if(isset($request->busqueda)){
+		if(isset($request->busqueda) && $request->busqueda != ''){
 			
 			$busqueda = $request->busqueda;
 			
@@ -86,7 +96,7 @@ class SuperiorCabaController extends Controller
 															
 		}
 		
-		$superiores_caba = $superiores_caba->paginate(8);
+		$superiores_caba = $superiores_caba->paginate(5);
 		
 		return view('superiorcaba',['superiores_caba' => $superiores_caba, 'comunas' => $comunas, 'comuna_selected' => $comuna_selected, 'sector_selected' => $sector_selected, 'busqueda' => $busqueda]);
 		

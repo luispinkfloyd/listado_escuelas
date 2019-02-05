@@ -21,7 +21,7 @@ class SecundarioConurbanoController extends Controller
      */
     public function index()
     {
-        $secundarios_conurbano = secundarios_conurbano::orderBy('nombre')->paginate(8);
+        //$secundarios_conurbano = secundarios_conurbano::orderBy('nombre')->paginate(8);
 		
 		$partidos = DB::table('secundarios_conurbanos')
 					->select('partido')
@@ -35,7 +35,7 @@ class SecundarioConurbanoController extends Controller
 					->orderBy('localidad')
 					->get();
 		
-		return view('secundarioconurbano',['secundarios_conurbano' => $secundarios_conurbano, 'partidos' => $partidos, 'localidades' => $localidades]);
+		return view('secundarioconurbano',['partidos' => $partidos, 'localidades' => $localidades]);
     }
 
     
@@ -73,6 +73,8 @@ class SecundarioConurbanoController extends Controller
 			
 			$localidades = $localidades->where('partido',$request->partido);
 			
+		}elseif(isset($request->partido) && $request->partido === 'Todos'){
+			$partido_selected = 'Todos';
 		}
 		
 		
@@ -85,6 +87,8 @@ class SecundarioConurbanoController extends Controller
 			
 			$secundarios_conurbano = $secundarios_conurbano->where('sector',$request->sector);
 			
+		}elseif(isset($request->sector) && $request->sector === 'Todos'){
+			$sector_selected = 'Todos';
 		}
 		
 		if(isset($request->localidad) && $request->localidad != 'Todas') {
@@ -93,6 +97,8 @@ class SecundarioConurbanoController extends Controller
 			
 			$secundarios_conurbano = $secundarios_conurbano->where('localidad',$request->localidad);
 			
+		}elseif(isset($request->localidad) && $request->localidad === 'Todas') {
+			$localidad_selected = 'Todas';
 		}
 		
 		if(isset($request->ambito) && $request->ambito != 'Todos'){ 
@@ -101,9 +107,13 @@ class SecundarioConurbanoController extends Controller
 			
 			$secundarios_conurbano = $secundarios_conurbano->where('ambito',$request->ambito);
 			
+		}elseif(isset($request->ambito) && $request->ambito === 'Todos'){ 
+			
+			$ambito_selected = 'Todos';
+			
 		}
 	
-		if(isset($request->busqueda)){
+		if(isset($request->busqueda) && $request->busqueda != ''){
 			
 			$busqueda = $request->busqueda;
 			
@@ -111,7 +121,7 @@ class SecundarioConurbanoController extends Controller
 															
 		}
 		
-		$secundarios_conurbano = $secundarios_conurbano->paginate(8);
+		$secundarios_conurbano = $secundarios_conurbano->paginate(5);
 		
 		return view('secundarioconurbano',['secundarios_conurbano' => $secundarios_conurbano, 'partidos' => $partidos, 'localidades' => $localidades, 'partido_selected' => $partido_selected, 'sector_selected' => $sector_selected, 'localidad_selected' => $localidad_selected, 'ambito_selected' => $ambito_selected,'busqueda' => $busqueda]);
 		

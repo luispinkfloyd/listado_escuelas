@@ -35,7 +35,6 @@ class SecundarioCabaController extends Controller
 	public function search(Request $request)
 	{
 		
-		
 		$secundarios_caba = secundarios_caba::orderBy('nombre');
 		
 		$comuna_selected = NULL;
@@ -57,6 +56,10 @@ class SecundarioCabaController extends Controller
 			
 			$secundarios_caba = $secundarios_caba->where('comuna',$request->comuna);
 			
+		}elseif(isset($request->comuna) && $request->comuna === 'Todas'){
+			
+			$comuna_selected = 'Todas';
+			
 		}
 		
 		if(isset($request->sector) && $request->sector != 'Todos'){ 
@@ -65,7 +68,13 @@ class SecundarioCabaController extends Controller
 			
 			$secundarios_caba = $secundarios_caba->where('sector',$request->sector);
 			
+		}elseif(isset($request->sector) && $request->sector === 'Todos'){
+			
+			$sector_selected = 'Todos';
+			
 		}
+		
+		
 		
 		/*
 		$secundarios_caba = $secundarios_caba->paginate(8);
@@ -75,7 +84,7 @@ class SecundarioCabaController extends Controller
 		*/
 	
 		
-		if(isset($request->busqueda)){
+		if(isset($request->busqueda) && $request->busqueda != ''){
 			
 			$busqueda = $request->busqueda;
 			
@@ -83,7 +92,7 @@ class SecundarioCabaController extends Controller
 															
 		}
 		
-		$secundarios_caba = $secundarios_caba->simplepaginate(5);
+		$secundarios_caba = $secundarios_caba->paginate(5);
 		
 		return view('secundariocaba',['secundarios_caba' => $secundarios_caba, 'comunas' => $comunas, 'comuna_selected' => $comuna_selected, 'sector_selected' => $sector_selected, 'busqueda' => $busqueda]);
 		

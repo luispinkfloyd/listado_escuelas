@@ -39,7 +39,7 @@ if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected)
             <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapsefiltros" aria-expanded="false" aria-controls="collapsefiltros" style="margin-left:10px">Filtros</button>
             <div class="col">
             </div>
-            @if(isset($busqueda))
+            @if(isset($busqueda) || isset($comuna_selected) || isset($sector_selected))
             <a href="{{ route('secundario_caba.index') }}" class="btn btn-outline-danger" style="margin-right:10px">Limpiar Búsqueda</a>
             @endif
         </div>
@@ -81,12 +81,13 @@ if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected)
         </div>
 	</div>
 </div>
+</form>
 @if(isset($secundarios_caba))
     @if(!empty($secundarios_caba[0]))
-    <div class="container jumbotron" style="padding:5px;margin:auto;width:95%;background-color:rgba(255,255,255,1.00)">    
+    <div class="container" style="margin:auto;width:95%;background-color:rgba(255,255,255,1.00)">    
         <hr style="border:#3c415e solid 1px">
         @foreach($secundarios_caba as $secundario_caba)
-                <div class="row form-group" style="padding-left:10px">
+                <div class="row form-group" style="padding-left:10px;padding-top:10px">
                     <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">Nombre:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_caba->nombre}}</b>
                     </div>
@@ -127,14 +128,14 @@ if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected)
         </div>
     </div>
     @else    
-       <div class="container jumbotron" style="margin:auto;width:95%;background-color:rgba(255,255,255,1.00)">    
+       <div class="container" style="width:95%;background-color:rgba(255,255,255,1.00)">    
             <hr style="border:#3c415e solid 1px">
             <p><h4 class="text-center font-weight-bold">No se encontraron resultados con el parámetro "{{$busqueda}}" <?php if(isset($sector_selected) && $sector_selected != 'Todos'){ echo ' en el sector '.$sector_selected;} if(isset($comuna_selected) && $comuna_selected != 'Todas'){ echo ' en la '.$comuna_selected; } ?>.</h4></p>
             <hr style="border:#3c415e solid 1px">
         </div> 
     @endif
 @else
-	<div class="container jumbotron" style="margin:auto;width:95%;background-color:rgba(255,255,255,1.00)">    
+	<div class="container" style="width:95%;background-color:rgba(255,255,255,1.00)">    
     	<hr style="border:#3c415e solid 1px">
         <p><h4 class="text-center font-weight-bold">Por favor, ingrese un parámetro de busqueda para mostrar resultados.</h4></p>
         <hr style="border:#3c415e solid 1px">

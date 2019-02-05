@@ -21,7 +21,7 @@ class SuperiorConurbanoController extends Controller
      */
     public function index()
     {
-		$superiores_conurbano = superiores_conurbano::orderBy('nombre')->paginate(8);
+		//$superiores_conurbano = superiores_conurbano::orderBy('nombre')->paginate(8);
 		
 		$partidos = DB::table('superiores_conurbanos')
 					->select('partido')
@@ -35,7 +35,7 @@ class SuperiorConurbanoController extends Controller
 					->orderBy('localidad')
 					->get();
 		
-		return view('superiorconurbano',['superiores_conurbano' => $superiores_conurbano, 'partidos' => $partidos, 'localidades' => $localidades]);
+		return view('superiorconurbano',['partidos' => $partidos, 'localidades' => $localidades]);
     }
 	
 	public function search(Request $request)
@@ -73,6 +73,8 @@ class SuperiorConurbanoController extends Controller
 			  
 			  $localidades = $localidades->where('partido',$request->partido);
 			  
+		  }elseif(isset($request->partido) && $request->partido === 'Todos'){
+			  $partido_selected = 'Todos';
 		  }
 		  
 		  
@@ -84,6 +86,8 @@ class SuperiorConurbanoController extends Controller
 			  
 			  $superiores_conurbano = $superiores_conurbano->where('sector',$request->sector);
 			  
+		  }elseif(isset($request->sector) && $request->sector === 'Todos'){
+			  $sector_selected = 'Todos';
 		  }
 		  
 		  if(isset($request->localidad) && $request->localidad != 'Todas') {
@@ -92,6 +96,8 @@ class SuperiorConurbanoController extends Controller
 			  
 			  $superiores_conurbano = $superiores_conurbano->where('localidad',$request->localidad);
 			  
+		  }elseif(isset($request->localidad) && $request->localidad === 'Todas') {
+			  $localidad_selected = 'Todas';
 		  }
 		  
 		  if(isset($request->ambito) && $request->ambito != 'Todos'){ 
@@ -99,6 +105,10 @@ class SuperiorConurbanoController extends Controller
 			  $ambito_selected = $request->ambito;
 			  
 			  $superiores_conurbano = $superiores_conurbano->where('ambito',$request->ambito);
+			  
+		  }elseif(isset($request->ambito) && $request->ambito === 'Todos'){ 
+			
+			  $ambito_selected = 'Todos';
 			  
 		  }
 	  

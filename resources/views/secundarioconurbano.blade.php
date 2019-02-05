@@ -30,7 +30,9 @@ if(isset($partido_selected) || isset($ambito_selected) || isset($sector_selected
             <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapsefiltros" aria-expanded="false" aria-controls="collapsefiltros" style="margin-left:10px">Filtros</button>
             <div class="col">
             </div>
+            @if(isset($busqueda) || isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected) || isset($localidad_selected))
             <a href="{{ route('secundario_conurbano.index') }}" class="btn btn-outline-danger" style="margin-right:10px">Limpiar Búsqueda</a>
+            @endif
         </div>
       </div>
     </div>
@@ -103,44 +105,76 @@ if(isset($partido_selected) || isset($ambito_selected) || isset($sector_selected
         </div>
 	</div>
 </div>
-<div class="container" style="overflow:auto">
-        <table class="table table-sm table-hover table-bordered" style="white-space:nowrap">
-          <thead class="thead-dark">
-            <tr>	
-                <th scope="col">cue</th>	
-                <th scope="col">nombre</th>	
-                <th scope="col">sector</th>
-                <th scope="col">ambito</th>
-                <th scope="col">domicilio</th>
-                <th scope="col">cp</th>
-                <th scope="col">telefono</th>
-                <th scope="col">codigo_localidad</th>
-                <th scope="col">localidad</th>
-                <th scope="col">partido</th>
-                <th scope="col">mail</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach($secundarios_conurbano as $secundario_conurbano)
-            <tr>
-              <td>{{$secundario_conurbano->cue}}</td>
-              <td>{{$secundario_conurbano->nombre}}</td>
-              <td>{{$secundario_conurbano->sector}}</td>
-              <td>{{$secundario_conurbano->ambito}}</td>
-              <td>{{$secundario_conurbano->domicilio}}</td>
-              <td>{{$secundario_conurbano->cp}}</td>
-              <td>{{$secundario_conurbano->telefono}}</td>
-              <td>{{$secundario_conurbano->codigo_localidad}}</td>
-              <td>{{$secundario_conurbano->localidad}}</td>
-              <td>{{$secundario_conurbano->partido}}</td>
-              <td>{{$secundario_conurbano->mail}}</td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
-</div>
-<div class="container">
-    {{$secundarios_conurbano->appends(Illuminate\Support\Facades\Input::except('page'))->links()}}
-</div>
 </form>
+
+
+
+@if(isset($secundarios_conurbano))
+    @if(!empty($secundarios_conurbano[0]))
+    <div class="container" style="margin:auto;width:95%;background-color:rgba(255,255,255,1.00)">    
+        <hr style="border:#3c415e solid 1px">
+        @foreach($secundarios_conurbano as $secundario_conurbano)
+                <div class="row form-group" style="padding-left:10px;padding-top:10px">
+                    <div class="col-sm-auto form-group">
+                        <label class="font-italic" style="color:#738598">Nombre:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->nombre}}</b>
+                    </div>
+                    <div class="col-sm-auto">
+                        <label class="font-italic" style="color:#738598">CUE:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->cue}}</b>
+                    </div>
+                    <div class="col-sm-auto">
+                        <label class="font-italic" style="color:#738598">Sector:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->sector}}</b>
+                    </div>
+                </div>
+                <div class="row" style="padding-left:10px">  
+                    <div class="col-sm-auto form-group">
+                        <label class="font-italic" style="color:#738598">Ámbito:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->ambito}}</b>
+                    </div>
+                    <div class="col-sm-auto">
+                        <label class="font-italic" style="color:#738598">Partido:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->partido}}</b>
+                    </div>
+                    <div class="col-sm-auto form-group">
+                        <label class="font-italic" style="color:#738598">Localidad:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->localidad}}</b>
+                    </div>
+                </div>
+                <div class="row form-group" style="padding-left:10px">
+                    <div class="col-sm-auto form-group">
+                        <label class="font-italic" style="color:#738598">Domicilio:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->domicilio}}</b>
+                    </div>
+                    <div class="col-sm-auto form-group">
+                        <label class="font-italic" style="color:#738598">CP:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->cp}}</b>
+                    </div>
+                    <div class="col-auto form-group">
+                        <label class="font-italic" style="color:#738598">Cód. Localidad:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->codigo_localidad}}</b>
+                    </div>
+                 </div>
+                 <div class="row" style="padding-left:10px">  
+                    <div class="col-sm-auto form-group">
+                        <label class="font-italic" style="color:#738598">Teléfono:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->telefono}}</b>
+                    </div>
+                    <div class="col-sm-auto form-group">
+                        <label class="font-italic" style="color:#738598">Mail:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->mail}}</b>
+                    </div>
+                    
+                </div>
+            <hr style="border:#3c415e solid 1px">
+        @endforeach
+        <div class="container" style="padding-top:20px;margin:auto">
+            {{$secundarios_conurbano->appends(Illuminate\Support\Facades\Input::except('page'))->links()}}
+        </div>
+    </div>
+    @else    
+       <div class="container" style="width:95%;background-color:rgba(255,255,255,1.00)">    
+            <hr style="border:#3c415e solid 1px">
+            <p><h4 class="text-center font-weight-bold">No se encontraron resultados con el parámetro "{{$busqueda}}" <?php //if(isset($sector_selected) && $sector_selected != 'Todos'){ echo ' en el sector '.$sector_selected;} if(isset($comuna_selected) && $comuna_selected != 'Todas'){ echo ' en la '.$comuna_selected; } ?>.</h4></p>
+            <hr style="border:#3c415e solid 1px">
+        </div> 
+    @endif
+@else
+	<div class="container" style="width:95%;background-color:rgba(255,255,255,1.00)">    
+    	<hr style="border:#3c415e solid 1px">
+        <p><h4 class="text-center font-weight-bold">Por favor, ingrese un parámetro de busqueda para mostrar resultados.</h4></p>
+        <hr style="border:#3c415e solid 1px">
+    </div> 
+@endif
+
 @endsection
