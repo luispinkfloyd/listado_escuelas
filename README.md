@@ -20,19 +20,23 @@ $ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo ap
 
 # Repositorio de PHP
 
-$ sudo add-apt-repository -y ppa:ondrej/php
+$ apt-get install apt-transport-https lsb-release ca-certificates
+
+$ wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+
+$ echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
 
 # Actualizar repositorios
 
 $ sudo apt-get update
 
-# PHP versión 7.2
-
-$ sudo apt-get install -y php7.2 php7.2-fpm libapache2-mod-php7.2 php7.2-cli php7.2-curl php7.2-sqlite3 php7.2-gd php7.2-xml php7.2-mcrypt php7.2-mbstring php7.2-iconv php7.2-pgsql php7.2-soap
-
 # Apache versión 2.4
 
 $ sudo apt-get install apache2
+
+# PHP versión 7.2
+
+$ sudo apt-get install -y php7.2 php7.2-fpm libapache2-mod-php7.2 php7.2-cli php7.2-curl php7.2-sqlite3 php7.2-gd php7.2-xml php7.2-mbstring php7.2-common php7.2-pgsql php7.2-soap php7.2-json php7.2-opcache php7.2-readline php7.2-mysql
 
 # Postgresql versión 9.6 o más
 
@@ -80,7 +84,7 @@ $ cd /var/www/html/apps
 
 $ git clone https://github.com/luispinkfloyd/listado_escuelas.git
 
-$ cd listados_escuelas
+$ cd listado_escuelas
 
 $ chmod -R 755 ./
 
@@ -120,6 +124,8 @@ $ php artisan migrate --seed
 $ sudo ln -s /var/www/html/apps/listado_escuelas/listado_escuelas.conf /etc/apache2/sites-enabled/
 
 $ sudo /etc/init.d/apache2 restart
+
+Ingresar en http://DIRECCION_IP_SERVIDOR/listado_escuelas 
 
 Registrarse e iniciar
 
