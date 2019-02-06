@@ -16,6 +16,8 @@ ENTER
 
 CTRL x
 
+$ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
 # Repositorio de PHP
 
 $ sudo add-apt-repository -y ppa:ondrej/php
