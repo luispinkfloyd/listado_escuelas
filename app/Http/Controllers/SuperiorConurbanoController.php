@@ -34,8 +34,32 @@ class SuperiorConurbanoController extends Controller
 					->groupBy('localidad')
 					->orderBy('localidad')
 					->get();
+					
+		$nombres = DB::table('superiores_conurbanos')
+					->select('nombre')
+					->groupBy('nombre')
+					->orderBy('nombre')
+					->get();
 		
-		return view('superiorconurbano',['partidos' => $partidos, 'localidades' => $localidades]);
+		$cps = DB::table('superiores_conurbanos')
+					->select('cp')
+					->groupBy('cp')
+					->orderBy('cp')
+					->get();
+		
+		$domicilios = DB::table('superiores_conurbanos')
+					->select('domicilio')
+					->groupBy('domicilio')
+					->orderBy('domicilio')
+					->get();
+					
+		$mails = DB::table('superiores_conurbanos')
+					->select('mail')
+					->groupBy('mail')
+					->orderBy('mail')
+					->get();
+		
+		return view('superiorconurbano',['partidos' => $partidos, 'localidades' => $localidades, 'domicilios' => $domicilios , 'nombres' => $nombres , 'cps' => $cps , 'mails' => $mails]);
     }
 	
 	public function search(Request $request)
@@ -58,6 +82,30 @@ class SuperiorConurbanoController extends Controller
 					->select('partido')
 					->groupBy('partido')
 					->orderBy('partido')
+					->get();
+					
+		$nombres = DB::table('superiores_conurbanos')
+					->select('nombre')
+					->groupBy('nombre')
+					->orderBy('nombre')
+					->get();
+		
+		$cps = DB::table('superiores_conurbanos')
+					->select('cp')
+					->groupBy('cp')
+					->orderBy('cp')
+					->get();
+		
+		$domicilios = DB::table('superiores_conurbanos')
+					->select('domicilio')
+					->groupBy('domicilio')
+					->orderBy('domicilio')
+					->get();
+					
+		$mails = DB::table('superiores_conurbanos')
+					->select('mail')
+					->groupBy('mail')
+					->orderBy('mail')
 					->get();
 					
 		$localidades = DB::table('superiores_conurbanos')
@@ -122,7 +170,7 @@ class SuperiorConurbanoController extends Controller
 		
 		$superiores_conurbano = $superiores_conurbano->paginate(8);
 		
-		return view('superiorconurbano',['superiores_conurbano' => $superiores_conurbano, 'partidos' => $partidos, 'localidades' => $localidades, 'partido_selected' => $partido_selected, 'sector_selected' => $sector_selected, 'localidad_selected' => $localidad_selected, 'ambito_selected' => $ambito_selected,'busqueda' => $busqueda]);
+		return view('superiorconurbano',['superiores_conurbano' => $superiores_conurbano, 'partidos' => $partidos, 'localidades' => $localidades, 'partido_selected' => $partido_selected, 'sector_selected' => $sector_selected, 'localidad_selected' => $localidad_selected, 'ambito_selected' => $ambito_selected,'busqueda' => $busqueda, 'domicilios' => $domicilios , 'nombres' => $nombres , 'cps' => $cps , 'mails' => $mails]);
 		
 		
 	}

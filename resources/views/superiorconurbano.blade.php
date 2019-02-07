@@ -1,4 +1,22 @@
 @extends('layouts.app')
+
+@section('style')
+<link rel="stylesheet" href="css/awesomplete.css" />
+<style>
+.awesomplete{
+	min-width:450px;
+	max-width:450px;
+}
+@media screen and (max-width: 768px){
+	.awesomplete{
+		min-width:250px;
+		max-width:250px;
+	}
+}
+</style>
+@endsection
+
+
 @section('content')
 
 
@@ -18,7 +36,21 @@ if(isset($partido_selected) || isset($ambito_selected) || isset($sector_selected
 		<div class="col-md">
       		<div class="container">
           		<div class="input-group" style="padding-top:20px">
-                  <input class="form-control" type="search" placeholder="Buscar" aria-label="Buscar" name="busqueda" <?php if(isset($busqueda)){ echo 'value="'.$busqueda.'"';}?>>
+                  <input class="awesomplete form-control" type="search" id="busqueda" placeholder="Buscar por nombre, domicilio, CP o mail" name="busqueda" <?php if(isset($busqueda)){ echo 'value="'.$busqueda.'"';}?> list="busqueda_list"/>
+                  		<datalist id="busqueda_list">
+                        	@foreach($cps as $cp)
+                            	<option>{{$cp->cp}}</option>
+                            @endforeach
+                            @foreach($nombres as $nombre)
+                            	<option>{{$nombre->nombre}}</option>
+                            @endforeach
+                            @foreach($mails as $mail)
+                            	<option>{{$mail->mail}}</option>
+                            @endforeach
+                            @foreach($domicilios as $domicilio)
+                            	<option>{{$domicilio->domicilio}}</option>
+                            @endforeach
+                        </datalist>
                   <div class="input-group-append">
                     <input class="btn btn-outline-success" type="submit" value="Buscar">
                   </div>
@@ -179,4 +211,9 @@ if(isset($partido_selected) || isset($ambito_selected) || isset($sector_selected
     </div> 
 @endif
 
+@endsection
+
+
+@section('script')
+<script src="js/awesomplete.js" async></script>
 @endsection

@@ -27,8 +27,32 @@ class SecundarioCabaController extends Controller
 					->groupBy('comuna')
 					->orderByRaw('substring(comuna,8,10)::int asc')
 					->get();
+					
+		$nombres = DB::table('secundarios_cabas')
+					->select('nombre')
+					->groupBy('nombre')
+					->orderBy('nombre')
+					->get();
 		
-		return view('secundariocaba',['comunas' => $comunas]);
+		$cps = DB::table('secundarios_cabas')
+					->select('cp')
+					->groupBy('cp')
+					->orderBy('cp')
+					->get();
+		
+		$domicilios = DB::table('secundarios_cabas')
+					->select('domicilio')
+					->groupBy('domicilio')
+					->orderBy('domicilio')
+					->get();
+					
+		$mails = DB::table('secundarios_cabas')
+					->select('mail')
+					->groupBy('mail')
+					->orderBy('mail')
+					->get();
+		
+		return view('secundariocaba',['comunas' => $comunas, 'domicilios' => $domicilios , 'nombres' => $nombres , 'cps' => $cps , 'mails' => $mails]);
     }
 
     
@@ -36,6 +60,7 @@ class SecundarioCabaController extends Controller
 	{
 		
 		$secundarios_caba = secundarios_caba::orderBy('nombre');
+		
 		
 		$comuna_selected = NULL;
 		
@@ -47,6 +72,30 @@ class SecundarioCabaController extends Controller
 					->select('comuna')
 					->groupBy('comuna')
 					->orderBy('comuna')
+					->get();
+					
+		$nombres = DB::table('secundarios_cabas')
+					->select('nombre')
+					->groupBy('nombre')
+					->orderBy('nombre')
+					->get();
+		
+		$cps = DB::table('secundarios_cabas')
+					->select('cp')
+					->groupBy('cp')
+					->orderBy('cp')
+					->get();
+		
+		$domicilios = DB::table('secundarios_cabas')
+					->select('domicilio')
+					->groupBy('domicilio')
+					->orderBy('domicilio')
+					->get();
+					
+		$mails = DB::table('secundarios_cabas')
+					->select('mail')
+					->groupBy('mail')
+					->orderBy('mail')
 					->get();
 		
 			
@@ -94,7 +143,7 @@ class SecundarioCabaController extends Controller
 		
 		$secundarios_caba = $secundarios_caba->paginate(5);
 		
-		return view('secundariocaba',['secundarios_caba' => $secundarios_caba, 'comunas' => $comunas, 'comuna_selected' => $comuna_selected, 'sector_selected' => $sector_selected, 'busqueda' => $busqueda]);
+		return view('secundariocaba',['secundarios_caba' => $secundarios_caba, 'comunas' => $comunas, 'comuna_selected' => $comuna_selected, 'sector_selected' => $sector_selected, 'busqueda' => $busqueda, 'domicilios' => $domicilios , 'nombres' => $nombres , 'cps' => $cps , 'mails' => $mails]);
 		
 	}
 	

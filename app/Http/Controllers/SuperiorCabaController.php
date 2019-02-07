@@ -29,8 +29,32 @@ class SuperiorCabaController extends Controller
 					->groupBy('comuna')
 					->orderBy('comuna')
 					->get();
+					
+		$nombres = DB::table('superiores_cabas')
+					->select('nombre')
+					->groupBy('nombre')
+					->orderBy('nombre')
+					->get();
 		
-		return view('superiorcaba',['comunas' => $comunas]);
+		$cps = DB::table('superiores_cabas')
+					->select('cp')
+					->groupBy('cp')
+					->orderBy('cp')
+					->get();
+		
+		$domicilios = DB::table('superiores_cabas')
+					->select('domicilio')
+					->groupBy('domicilio')
+					->orderBy('domicilio')
+					->get();
+					
+		$mails = DB::table('superiores_cabas')
+					->select('mail')
+					->groupBy('mail')
+					->orderBy('mail')
+					->get();
+		
+		return view('superiorcaba',['comunas' => $comunas, 'domicilios' => $domicilios , 'nombres' => $nombres , 'cps' => $cps , 'mails' => $mails]);
     }
 
     
@@ -51,6 +75,30 @@ class SuperiorCabaController extends Controller
 					->select('comuna')
 					->groupBy('comuna')
 					->orderBy('comuna')
+					->get();
+		
+		$nombres = DB::table('superiores_cabas')
+					->select('nombre')
+					->groupBy('nombre')
+					->orderBy('nombre')
+					->get();
+		
+		$cps = DB::table('superiores_cabas')
+					->select('cp')
+					->groupBy('cp')
+					->orderBy('cp')
+					->get();
+		
+		$domicilios = DB::table('superiores_cabas')
+					->select('domicilio')
+					->groupBy('domicilio')
+					->orderBy('domicilio')
+					->get();
+					
+		$mails = DB::table('superiores_cabas')
+					->select('mail')
+					->groupBy('mail')
+					->orderBy('mail')
 					->get();
 		
 			
@@ -98,7 +146,7 @@ class SuperiorCabaController extends Controller
 		
 		$superiores_caba = $superiores_caba->paginate(5);
 		
-		return view('superiorcaba',['superiores_caba' => $superiores_caba, 'comunas' => $comunas, 'comuna_selected' => $comuna_selected, 'sector_selected' => $sector_selected, 'busqueda' => $busqueda]);
+		return view('superiorcaba',['superiores_caba' => $superiores_caba, 'comunas' => $comunas, 'comuna_selected' => $comuna_selected, 'sector_selected' => $sector_selected, 'busqueda' => $busqueda, 'domicilios' => $domicilios , 'nombres' => $nombres , 'cps' => $cps , 'mails' => $mails]);
 		
 	}
 	

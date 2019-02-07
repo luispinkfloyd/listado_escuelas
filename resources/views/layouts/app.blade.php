@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('style')
     <style>
 		.col-sm-auto {
 			 width: auto;
@@ -35,6 +36,10 @@
 		  margin:auto;
 		}
 	</style>
+    
+    
+    
+    
 </head>
 <body>
     <div id="app">

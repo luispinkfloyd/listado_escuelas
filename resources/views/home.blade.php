@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('style')
+<link rel="stylesheet" href="css/awesomplete.css" />
+@endsection
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

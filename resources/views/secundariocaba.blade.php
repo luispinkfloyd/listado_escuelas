@@ -1,11 +1,28 @@
 @extends('layouts.app')
+
+@section('style')
+<link rel="stylesheet" href="css/awesomplete.css" />
+<style>
+.awesomplete{
+	min-width:450px;
+	max-width:450px;
+}
+@media screen and (max-width: 768px){
+	.awesomplete{
+		min-width:250px;
+		max-width:250px;
+	}
+}
+</style>
+@endsection
+
 @section('content')
 
 <?php
 $collapse = 'collapse';
 if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected) || isset($localidad_selected)) $collapse = '';
 ?>
-<form action="{{ route('busqueda_secundarios_caba') }}" method="get">
+<form action="{{ route('busqueda_secundarios_caba') }}" method="get" autocomplete="off">
 <div class="container jumbotron" style="background-color:#283148;padding:10px 0px 0px 0px">
 	<div class="row">
 		<div class="col-sm-auto">
@@ -25,7 +42,21 @@ if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected)
 		<div class="col-sm">
       		<div class="container">
           		<div class="input-group" style="padding-top:20px">
-                  <input class="form-control" type="search" placeholder="Buscar por nombre, domicilio, CP o mail" aria-label="Buscar" name="busqueda" <?php if(isset($busqueda)){ echo 'value="'.$busqueda.'"';}?>>
+                  <input class="awesomplete form-control" type="search" id="busqueda" placeholder="Buscar por nombre, domicilio, CP o mail" name="busqueda" <?php if(isset($busqueda)){ echo 'value="'.$busqueda.'"';}?> list="busqueda_list"/>
+                  		<datalist id="busqueda_list">
+                        	@foreach($cps as $cp)
+                            	<option>{{$cp->cp}}</option>
+                            @endforeach
+                            @foreach($nombres as $nombre)
+                            	<option>{{$nombre->nombre}}</option>
+                            @endforeach
+                            @foreach($mails as $mail)
+                            	<option>{{$mail->mail}}</option>
+                            @endforeach
+                            @foreach($domicilios as $domicilio)
+                            	<option>{{$domicilio->domicilio}}</option>
+                            @endforeach
+                        </datalist>
                   <div class="input-group-append">
                     <input class="btn btn-outline-success" type="submit" value="Buscar">
                   </div>
@@ -91,7 +122,7 @@ if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected)
                     <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">Nombre:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_caba->nombre}}</b>
                     </div>
-                    <div class="col-sm-auto">
+                    <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">CUE:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_caba->cue}}</b>
                     </div>
                     <div class="col-sm-auto">
@@ -141,4 +172,10 @@ if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected)
         <hr style="border:#3c415e solid 1px">
     </div> 
 @endif
+
+
+@endsection
+
+@section('script')
+<script src="js/awesomplete.js" async></script>
 @endsection
