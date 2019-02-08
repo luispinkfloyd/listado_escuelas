@@ -25,7 +25,7 @@
 $collapse = 'collapse';
 if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected) || isset($localidad_selected)) $collapse = '';
 ?>
-<form action="{{ route('busqueda_secundarios_caba') }}" method="get">
+<form action="{{ route('busqueda_superiores_caba') }}" method="get">
 <div class="container jumbotron" style="background-color:#283148;padding:10px 0px 0px 0px">
 	<div class="row">
 		<div class="col-sm-auto">
@@ -47,17 +47,8 @@ if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected)
           		<div class="input-group" style="padding-top:20px">
                   <input class="awesomplete form-control" type="search" id="busqueda" placeholder="Buscar por nombre, domicilio, CP o mail" name="busqueda" <?php if(isset($busqueda)){ echo 'value="'.$busqueda.'"';}?> list="busqueda_list"/>
                   		<datalist id="busqueda_list">
-                        	@foreach($cps as $cp)
-                            	<option>{{$cp->cp}}</option>
-                            @endforeach
-                            @foreach($nombres as $nombre)
+                        	@foreach($nombres as $nombre)
                             	<option>{{$nombre->nombre}}</option>
-                            @endforeach
-                            @foreach($mails as $mail)
-                            	<option>{{$mail->mail}}</option>
-                            @endforeach
-                            @foreach($domicilios as $domicilio)
-                            	<option>{{$domicilio->domicilio}}</option>
                             @endforeach
                         </datalist>
                   <div class="input-group-append">

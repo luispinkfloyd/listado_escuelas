@@ -39,28 +39,10 @@ class SecundarioConurbanoController extends Controller
 					->select('nombre')
 					->groupBy('nombre')
 					->orderBy('nombre')
-					->get();
-		
-		$cps = DB::table('secundarios_conurbanos')
-					->select('cp')
-					->groupBy('cp')
-					->orderBy('cp')
-					->get();
-		
-		$domicilios = DB::table('secundarios_conurbanos')
-					->select('domicilio')
-					->groupBy('domicilio')
-					->orderBy('domicilio')
-					->get();
-					
-		$mails = DB::table('secundarios_conurbanos')
-					->select('mail')
-					->groupBy('mail')
-					->orderBy('mail')
-					->get();			
+					->get();		
 					
 		
-		return view('secundarioconurbano',['partidos' => $partidos, 'localidades' => $localidades , 'domicilios' => $domicilios , 'nombres' => $nombres , 'cps' => $cps , 'mails' => $mails]);
+		return view('secundarioconurbano',['partidos' => $partidos, 'localidades' => $localidades , 'nombres' => $nombres]);
     }
 
     
@@ -87,28 +69,7 @@ class SecundarioConurbanoController extends Controller
 					->get();
 					
 		$nombres = DB::table('secundarios_conurbanos')
-					->select('nombre')
-					->groupBy('nombre')
-					->orderBy('nombre')
-					->get();
-		
-		$cps = DB::table('secundarios_conurbanos')
-					->select('cp')
-					->groupBy('cp')
-					->orderBy('cp')
-					->get();
-		
-		$domicilios = DB::table('secundarios_conurbanos')
-					->select('domicilio')
-					->groupBy('domicilio')
-					->orderBy('domicilio')
-					->get();
-					
-		$mails = DB::table('secundarios_conurbanos')
-					->select('mail')
-					->groupBy('mail')
-					->orderBy('mail')
-					->get();	
+					->select('nombre');	
 					
 		$localidades = DB::table('secundarios_conurbanos')->select('localidad');
 					
@@ -121,6 +82,8 @@ class SecundarioConurbanoController extends Controller
 			$secundarios_conurbano = $secundarios_conurbano->where('partido',$request->partido);
 			
 			$localidades = $localidades->where('partido',$request->partido);
+			
+			$nombres = $nombres->where('partido',$request->partido);
 			
 		}elseif(isset($request->partido) && $request->partido === 'Todos'){
 			$partido_selected = 'Todos';
@@ -136,6 +99,8 @@ class SecundarioConurbanoController extends Controller
 			
 			$secundarios_conurbano = $secundarios_conurbano->where('sector',$request->sector);
 			
+			$nombres = $nombres->where('sector',$request->sector);
+			
 		}elseif(isset($request->sector) && $request->sector === 'Todos'){
 			$sector_selected = 'Todos';
 		}
@@ -145,6 +110,8 @@ class SecundarioConurbanoController extends Controller
 			$localidad_selected = $request->localidad;
 			
 			$secundarios_conurbano = $secundarios_conurbano->where('localidad',$request->localidad);
+			
+			$nombres = $nombres->where('localidad',$request->localidad);
 			
 		}elseif(isset($request->localidad) && $request->localidad === 'Todas') {
 			$localidad_selected = 'Todas';
@@ -156,23 +123,27 @@ class SecundarioConurbanoController extends Controller
 			
 			$secundarios_conurbano = $secundarios_conurbano->where('ambito',$request->ambito);
 			
+			$nombres = $nombres->where('ambito',$request->ambito);
+			
 		}elseif(isset($request->ambito) && $request->ambito === 'Todos'){ 
 			
 			$ambito_selected = 'Todos';
 			
 		}
 	
+		$nombres = $nombres->groupBy('nombre')->orderBy('nombre')->get();
+		
 		if(isset($request->busqueda) && $request->busqueda != ''){
 			
 			$busqueda = $request->busqueda;
 			
-			$secundarios_conurbano = $secundarios_conurbano->whereRaw("(f_limpiar_acentos(nombre)::text ilike f_limpiar_acentos('%".$request->busqueda."%') or f_limpiar_acentos(domicilio)::text ilike f_limpiar_acentos('%".$request->busqueda."%') or mail::text ilike '%".$request->busqueda."%' or telefono::text ilike '%".$request->busqueda."%' or cue::text ilike '%".$request->busqueda."%' or cp::text ilike '%".$request->busqueda."%' or codigo_localidad::text ilike '%".$request->busqueda."%')");
+			$secundarios_conurbano = $secundarios_conurbano->whereRaw("(f_limpiar_acentos(nombre)::text ilike f_limpiar_acentos('%".$request->busqueda."%'))");
 															
 		}
 		
 		$secundarios_conurbano = $secundarios_conurbano->paginate(5);
 		
-		return view('secundarioconurbano',['secundarios_conurbano' => $secundarios_conurbano, 'partidos' => $partidos, 'localidades' => $localidades, 'partido_selected' => $partido_selected, 'sector_selected' => $sector_selected, 'localidad_selected' => $localidad_selected, 'ambito_selected' => $ambito_selected,'busqueda' => $busqueda, 'domicilios' => $domicilios , 'nombres' => $nombres , 'cps' => $cps , 'mails' => $mails]);
+		return view('secundarioconurbano',['secundarios_conurbano' => $secundarios_conurbano, 'partidos' => $partidos, 'localidades' => $localidades, 'partido_selected' => $partido_selected, 'sector_selected' => $sector_selected, 'localidad_selected' => $localidad_selected, 'ambito_selected' => $ambito_selected,'busqueda' => $busqueda, 'nombres' => $nombres ]);
 		
 	}
 	

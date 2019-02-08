@@ -34,25 +34,7 @@ class SecundarioCabaController extends Controller
 					->orderBy('nombre')
 					->get();
 		
-		$cps = DB::table('secundarios_cabas')
-					->select('cp')
-					->groupBy('cp')
-					->orderBy('cp')
-					->get();
-		
-		$domicilios = DB::table('secundarios_cabas')
-					->select('domicilio')
-					->groupBy('domicilio')
-					->orderBy('domicilio')
-					->get();
-					
-		$mails = DB::table('secundarios_cabas')
-					->select('mail')
-					->groupBy('mail')
-					->orderBy('mail')
-					->get();
-		
-		return view('secundariocaba',['comunas' => $comunas, 'domicilios' => $domicilios , 'nombres' => $nombres , 'cps' => $cps , 'mails' => $mails]);
+		return view('secundariocaba',['comunas' => $comunas, 'nombres' => $nombres ]);
     }
 
     
@@ -71,32 +53,12 @@ class SecundarioCabaController extends Controller
 		$comunas = DB::table('secundarios_cabas')
 					->select('comuna')
 					->groupBy('comuna')
-					->orderBy('comuna')
+					->orderByRaw('substring(comuna,8,10)::int asc')
 					->get();
 					
 		$nombres = DB::table('secundarios_cabas')
-					->select('nombre')
-					->groupBy('nombre')
-					->orderBy('nombre')
-					->get();
-		
-		$cps = DB::table('secundarios_cabas')
-					->select('cp')
-					->groupBy('cp')
-					->orderBy('cp')
-					->get();
-		
-		$domicilios = DB::table('secundarios_cabas')
-					->select('domicilio')
-					->groupBy('domicilio')
-					->orderBy('domicilio')
-					->get();
+					->select('nombre');
 					
-		$mails = DB::table('secundarios_cabas')
-					->select('mail')
-					->groupBy('mail')
-					->orderBy('mail')
-					->get();
 		
 			
 		if(isset($request->comuna) && $request->comuna != 'Todas') {
@@ -104,6 +66,8 @@ class SecundarioCabaController extends Controller
 			$comuna_selected = $request->comuna;
 			
 			$secundarios_caba = $secundarios_caba->where('comuna',$request->comuna);
+			
+			$nombres = $nombres->where('comuna',$request->comuna);
 			
 		}elseif(isset($request->comuna) && $request->comuna === 'Todas'){
 			
@@ -116,6 +80,8 @@ class SecundarioCabaController extends Controller
 			$sector_selected = $request->sector;
 			
 			$secundarios_caba = $secundarios_caba->where('sector',$request->sector);
+			
+			$nombres = $nombres->where('sector',$request->sector);
 			
 		}elseif(isset($request->sector) && $request->sector === 'Todos'){
 			
@@ -131,19 +97,22 @@ class SecundarioCabaController extends Controller
 		print_r($secundarios_caba);
 		exit;
 		*/
-	
+		
+		$nombres = $nombres->groupBy('nombre')->orderBy('nombre')->get();
+		
+		
 		
 		if(isset($request->busqueda) && $request->busqueda != ''){
 			
 			$busqueda = $request->busqueda;
 			
-			$secundarios_caba = $secundarios_caba->whereRaw("(f_limpiar_acentos(nombre)::text ilike f_limpiar_acentos('%".$request->busqueda."%') or f_limpiar_acentos(domicilio)::text ilike f_limpiar_acentos('%".$request->busqueda."%') or mail::text ilike '%".$request->busqueda."%' or telefono::text ilike '%".$request->busqueda."%' or cue::text ilike '%".$request->busqueda."%' or cp::text ilike '%".$request->busqueda."%' or codigo_localidad::text ilike '%".$request->busqueda."%')");
+			$secundarios_caba = $secundarios_caba->whereRaw("(f_limpiar_acentos(nombre)::text ilike f_limpiar_acentos('%".$request->busqueda."%'))");
 															
 		}
 		
 		$secundarios_caba = $secundarios_caba->paginate(5);
 		
-		return view('secundariocaba',['secundarios_caba' => $secundarios_caba, 'comunas' => $comunas, 'comuna_selected' => $comuna_selected, 'sector_selected' => $sector_selected, 'busqueda' => $busqueda, 'domicilios' => $domicilios , 'nombres' => $nombres , 'cps' => $cps , 'mails' => $mails]);
+		return view('secundariocaba',['secundarios_caba' => $secundarios_caba, 'comunas' => $comunas, 'comuna_selected' => $comuna_selected, 'sector_selected' => $sector_selected, 'busqueda' => $busqueda, 'nombres' => $nombres]);
 		
 	}
 	

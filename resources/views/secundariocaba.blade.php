@@ -44,17 +44,8 @@ if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected)
           		<div class="input-group" style="padding-top:20px">
                   <input class="awesomplete form-control" type="search" id="busqueda" placeholder="Buscar por nombre, domicilio, CP o mail" name="busqueda" <?php if(isset($busqueda)){ echo 'value="'.$busqueda.'"';}?> list="busqueda_list"/>
                   		<datalist id="busqueda_list">
-                        	@foreach($cps as $cp)
-                            	<option>{{$cp->cp}}</option>
-                            @endforeach
-                            @foreach($nombres as $nombre)
+                        	@foreach($nombres as $nombre)
                             	<option>{{$nombre->nombre}}</option>
-                            @endforeach
-                            @foreach($mails as $mail)
-                            	<option>{{$mail->mail}}</option>
-                            @endforeach
-                            @foreach($domicilios as $domicilio)
-                            	<option>{{$domicilio->domicilio}}</option>
                             @endforeach
                         </datalist>
                   <div class="input-group-append">
@@ -115,7 +106,7 @@ if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected)
 </form>
 @if(isset($secundarios_caba))
     @if(!empty($secundarios_caba[0]))
-    <div class="container" style="margin:auto;width:95%;background-color:rgba(255,255,255,1.00)">    
+    <div class="container" style="margin:auto;width:95%;background-color:rgba(255,255,255,1.00);">
         <hr style="border:#3c415e solid 1px">
         @foreach($secundarios_caba as $secundario_caba)
                 <div class="row form-group" style="padding-left:10px;padding-top:10px">
