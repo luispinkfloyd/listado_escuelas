@@ -107,9 +107,24 @@ if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected)
 	</div>
 </div>
 </form>
-
 @if(isset($superiores_caba))
     @if(!empty($superiores_caba[0]))
+    <div class="container" style="margin:auto">
+    <form action="{{ route('superiores_caba_excel') }}" method="get">
+        @if(isset($busqueda))
+        	<input type="hidden" value="{{$busqueda}}" name="busqueda_excel">
+        @endif
+        @if(isset($sector_selected))
+        	<input type="hidden" value="{{$sector_selected}}" name="sector_excel">
+        @endif
+        @if(isset($comuna_selected))
+        	<input type="hidden" value="{{$comuna_selected}}" name="comuna_excel">
+        @endif
+        <button class="btn btn-success" style="display:inline-block" type="submit">
+            <img src="{{asset('img/excel.png')}}" height="20" style="float:left;padding-right:10px" /><span>Exportar a  Excel</span>
+        </button>
+	</form>
+    </div>
     <div class="container" style="margin:auto;width:95%;background-color:rgba(255,255,255,1.00)">    
         <hr style="border:#3c415e solid 1px">
         @foreach($superiores_caba as $superior_caba)
@@ -167,6 +182,14 @@ if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected)
         <hr style="border:#3c415e solid 1px">
     </div> 
 @endif
+
+<div class="container" style="padding-top:50px">
+    <div class="row justify-content-center">
+    	<a href="{{ url('/caba') }}" type="button" class="btn btn-link">Atrás</a>
+    </div>
+</div>
+
+
 @endsection
 
 @section('script')

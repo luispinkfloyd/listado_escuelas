@@ -202,6 +202,12 @@ if(isset($partido_selected) || isset($ambito_selected) || isset($sector_selected
     </div> 
 @endif
 
+<div class="container" style="padding-top:50px">
+    <div class="row justify-content-center">
+    	<a href="{{ url('/conurbano') }}" type="button" class="btn btn-link">Atrás</a>
+    </div>
+</div>
+
 @endsection
 
 

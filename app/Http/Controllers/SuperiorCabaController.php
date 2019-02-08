@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\superiores_caba;
 use DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SuperiorCabaController extends Controller
 {
@@ -118,7 +119,41 @@ class SuperiorCabaController extends Controller
 	
 	
 	
+	public function export_excel(Request $request){
+		
+		$superiores_caba = superiores_caba::orderBy('nombre');
+		
+			
+		if(isset($request->comuna_excel) && $request->comuna_excel != 'Todas') {
+			
+			$superiores_caba = $superiores_caba->where('comuna',$request->comuna_excel);
+			
+		}
+		
+		if(isset($request->sector_excel) && $request->sector != 'Todos'){
+			
+			$superiores_caba = $superiores_caba->where('sector',$request->sector_excel);
+			
+		}
 	
+		
+		if(isset($request->busqueda_excel) && $request->busqueda_excel != ''){
+			
+			$superiores_caba = $superiores_caba->whereRaw("(f_limpiar_acentos(nombre)::text ilike f_limpiar_acentos('%".$request->busqueda_excel."%'))");
+															
+		}
+		
+		$superiores_caba = $superiores_caba->get();
+		
+		$date = date('dmYGis');
+		Excel::create("reporte_caba_superiores_".$date, function ($excel) use ($superiores_caba) {
+			$excel->setTitle("Reporte Escuelas Superiores CABA");
+			$excel->sheet("Escuelas Superiores CABA", function ($sheet) use ($superiores_caba) {
+				$sheet->loadView('exports.caba.superior.reporte_excel_caba_superior')->with('superiores_caba', $superiores_caba);
+			})->download('xls');
+			return back();
+		});
+	}
 	
 	
 	

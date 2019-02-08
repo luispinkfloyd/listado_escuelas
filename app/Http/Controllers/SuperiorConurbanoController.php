@@ -36,7 +36,10 @@ class SuperiorConurbanoController extends Controller
 					->get();
 					
 		$nombres = DB::table('superiores_conurbanos')
-					->select('nombre');
+					->select('nombre')
+					->groupBy('nombre')
+					->orderBy('nombre')
+					->get();
 					
 		
 		return view('superiorconurbano',['partidos' => $partidos, 'localidades' => $localidades, 'nombres' => $nombres]);
