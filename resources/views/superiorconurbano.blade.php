@@ -36,7 +36,7 @@ if(isset($partido_selected) || isset($ambito_selected) || isset($sector_selected
 		<div class="col-md">
       		<div class="container">
           		<div class="input-group" style="padding-top:20px">
-                  <input class="awesomplete form-control" type="search" id="busqueda" placeholder="Buscar por nombre, domicilio, CP o mail" name="busqueda" <?php if(isset($busqueda)){ echo 'value="'.$busqueda.'"';}?> list="busqueda_list"/>
+                  <input class="awesomplete form-control" type="search" id="busqueda" placeholder="Buscar por nombre de institución" name="busqueda" <?php if(isset($busqueda)){ echo 'value="'.$busqueda.'"';}?> list="busqueda_list"/>
                   		<datalist id="busqueda_list">
                         	@foreach($nombres as $nombre)
                             	<option>{{$nombre->nombre}}</option>
@@ -136,6 +136,25 @@ if(isset($partido_selected) || isset($ambito_selected) || isset($sector_selected
 
 @if(isset($superiores_conurbano))
     @if(!empty($superiores_conurbano[0]))
+    <div class="container" style="margin:auto">
+    <form action="{{ route('superiores_conurbano_excel') }}" method="get">
+        @if(isset($busqueda))
+        	<input type="hidden" value="{{$busqueda}}" name="busqueda_excel">
+        @endif
+        @if(isset($sector_selected))
+        	<input type="hidden" value="{{$sector_selected}}" name="sector_excel">
+        @endif
+        @if(isset($partido_selected))
+        	<input type="hidden" value="{{$partido_selected}}" name="partido_excel">
+        @endif
+        @if(isset($localidad_selected))
+        	<input type="hidden" value="{{$localidad_selected}}" name="localidad_excel">
+        @endif
+        <button class="btn btn-success" style="display:inline-block" type="submit">
+            <img src="{{asset('img/excel.png')}}" height="20" style="float:left;padding-right:10px" /><span>Exportar a  Excel</span>
+        </button>
+	</form>
+    </div>
     <div class="container" style="margin:auto;width:95%;background-color:rgba(255,255,255,1.00)">    
         <hr style="border:#3c415e solid 1px">
         @foreach($superiores_conurbano as $superior_conurbano)

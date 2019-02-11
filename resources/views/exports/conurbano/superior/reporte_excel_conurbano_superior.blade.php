@@ -8,59 +8,48 @@
     	border: 1px solid #000000;
 	}
 </style>
-<table class="table table-striped table-hover table-size" id="promedio_historico">
+<table>
     <thead>
     	<tr>
-            <td colspan="19" align="left">
-                <img src="untref_logo.png"/>
-                <p><h1 align="center">Reporte Curso de Ingreso {{$datos[0]->periodo}}</h1></p>
+            <td colspan="13" align="left">
+                <img src="img/untref_logo.png"/>
+                <p><h1 align="center">Escuelas Superiores de Conurbano</h1></p>
             </td>
         </tr>
         <tr>
-            <th>Ranking</th>
-            <th>Legajo</th>
-            <th>Apellido Nombres</th>
-            <th>Documento</th>
-            <th>Carrera</th>
-            <th>Comisión</th>
-            <th>Situación</th>
-            <th>Promedio General</th>
-            <th>Primera Materia</th>
-            <th>Parcial 1</th>
-            <th>Parcial 2</th>
-            <th>Final 1</th>
-            <th>Primer Promedio</th>
-            <th>Segunda Materia</th>
-            <th>Parcial 1</th>
-            <th>Parcial 2</th>
-            <th>Final 2</th>
-            <th>Segundo Promedio</th>
-            <th>Estado</th>
+            <th>ID</th>
+            <th>Jurisdicción</th>
+            <th>Nombre</th>
+            <th>CUE</th>
+            <th>Sector</th>
+            <th>Ámbito</th>
+            <th>Domicilio</th>
+            <th>CP</th>
+            <th>Código Localidad</th>
+            <th>Localidad</th>
+            <th>Partido</th>
+            <th>Teléfono</th>
+            <th>Mail</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($datos as $dato)
-            <tr>
-                <td width="8">{{$dato->posicion_ranking}}</td>
-                <td width="8">{{$dato->legajo}}</td>
-                <td width="35">{{$dato->apellido_nombres}}</td>
-                <td width="13">{{$dato->documento}}</td>
-                <td width="40">{{$dato->carrera}}</td>
-                <td width="13">{{$dato->comision}}</td>
-                <td width="12">{{$dato->situacion}}</td>
-                <td width="15">{{$dato->promedio_general}}</td>
-                <td width="35">{{$dato->materia_1}}</td>
-                <td width="8">{{$dato->primer_parcial_nota_1}}</td>
-                <td width="8">{{$dato->segundo_parcial_nota_1}}</td>
-                <td width="8">{{$dato->final_nota_1}}</td>
-                <td width="15">{{$dato->primer_promedio}}</td>
-                <td width="35">{{$dato->materia_2}}</td>
-                <td width="8">{{$dato->primer_parcial_nota_2}}</td>
-                <td width="8">{{$dato->segundo_parcial_nota_2}}</td>
-                <td width="8">{{$dato->final_nota_2}}</td>
-                <td width="15">{{$dato->segundo_promedio}}</td>
-                <td width="15">{{$dato->estado}}</td>
-            </tr>
+            
+            @foreach($superiores_conurbano as $superior_conurbano)
+            	<tr>
+                    <td width="5">{{$superior_conurbano->id}}</td>
+                    <td width="28">{{$superior_conurbano->jurisdiccion}}</td>
+                    <td width="40">{{$superior_conurbano->nombre}}</td>
+                    <td width="13">{{$superior_conurbano->cue}}</td>
+                    <td width="12">{{$superior_conurbano->sector}}</td>
+                    <td width="12">{{$superior_conurbano->ambito}}</td>
+                    <td width="40">{{$superior_conurbano->domicilio}}</td>
+                    <td width="8">{{$superior_conurbano->cp}}</td>
+                    <td width="15">{{$superior_conurbano->codigo_localidad}}</td>
+                    <td width="30">{{$superior_conurbano->localidad}}</td>
+                    <td width="15">{{$superior_conurbano->partido}}</td>
+                    <td width="20">{{$superior_conurbano->telefono}}</td>
+                    <td width="40">{{$superior_conurbano->mail}}</td>
+                </tr>
         @endforeach
     </tbody>
 </table>

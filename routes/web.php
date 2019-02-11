@@ -44,3 +44,7 @@ Route::get('busqueda_superiores_conurbano','SuperiorConurbanoController@search')
 Route::get('superiores_caba_excel','SuperiorCabaController@export_excel')->name('superiores_caba_excel');
 
 Route::get('secundarios_caba_excel','SecundarioCabaController@export_excel')->name('secundarios_caba_excel');
+
+Route::get('superiores_conurbano_excel','SuperiorconurbanoController@export_excel')->name('superiores_conurbano_excel');
+
+Route::get('secundarios_conurbano_excel','SecundarioconurbanoController@export_excel')->name('secundarios_conurbano_excel');

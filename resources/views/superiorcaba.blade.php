@@ -45,7 +45,7 @@ if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected)
 		<div class="col-sm">
       		<div class="container">
           		<div class="input-group" style="padding-top:20px">
-                  <input class="awesomplete form-control" type="search" id="busqueda" placeholder="Buscar por nombre, domicilio, CP o mail" name="busqueda" <?php if(isset($busqueda)){ echo 'value="'.$busqueda.'"';}?> list="busqueda_list"/>
+                  <input class="awesomplete form-control" type="search" id="busqueda" placeholder="Buscar por nombre de institución" name="busqueda" <?php if(isset($busqueda)){ echo 'value="'.$busqueda.'"';}?> list="busqueda_list"/>
                   		<datalist id="busqueda_list">
                         	@foreach($nombres as $nombre)
                             	<option>{{$nombre->nombre}}</option>

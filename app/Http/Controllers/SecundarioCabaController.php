@@ -147,8 +147,8 @@ class SecundarioCabaController extends Controller
 		
 		$date = date('dmYGis');
 		Excel::create("reporte_caba_secundarios_".$date, function ($excel) use ($secundarios_caba) {
-			$excel->setTitle("Reporte Escuelas secundarios CABA");
-			$excel->sheet("Escuelas secundarios CABA", function ($sheet) use ($secundarios_caba) {
+			$excel->setTitle("Reporte Escuelas Secundarios CABA");
+			$excel->sheet("Escuelas Secundarios CABA", function ($sheet) use ($secundarios_caba) {
 				$sheet->loadView('exports.caba.secundario.reporte_excel_caba_secundario')->with('secundarios_caba', $secundarios_caba);
 			})->download('xls');
 			return back();

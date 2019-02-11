@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\secundarios_conurbano;
 use DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SecundarioConurbanoController extends Controller
 {
@@ -146,6 +147,50 @@ class SecundarioConurbanoController extends Controller
 		return view('secundarioconurbano',['secundarios_conurbano' => $secundarios_conurbano, 'partidos' => $partidos, 'localidades' => $localidades, 'partido_selected' => $partido_selected, 'sector_selected' => $sector_selected, 'localidad_selected' => $localidad_selected, 'ambito_selected' => $ambito_selected,'busqueda' => $busqueda, 'nombres' => $nombres ]);
 		
 	}
+	
+	
+	public function export_excel(Request $request){
+		
+		$secundarios_conurbano = secundarios_conurbano::orderBy('nombre');
+		
+			
+		if(isset($request->partido_excel) && $request->partido_excel != 'Todos') {
+			
+			$secundarios_conurbano = $secundarios_conurbano->where('parido',$request->partido_excel);
+			
+		}
+		
+		if(isset($request->localidad_excel) && $request->localidad_excel != 'Todas') {
+			
+			$secundarios_conurbano = $secundarios_conurbano->where('localidad',$request->localidad_excel);
+			
+		}
+		
+		if(isset($request->sector_excel) && $request->sector != 'Todos'){
+			
+			$secundarios_conurbano = $secundarios_conurbano->where('sector',$request->sector_excel);
+			
+		}
+	
+		
+		if(isset($request->busqueda_excel) && $request->busqueda_excel != ''){
+			
+			$secundarios_conurbano = $secundarios_conurbano->whereRaw("(f_limpiar_acentos(nombre)::text ilike f_limpiar_acentos('%".$request->busqueda_excel."%'))");
+															
+		}
+		
+		$secundarios_conurbano = $secundarios_conurbano->get();
+		
+		$date = date('dmYGis');
+		Excel::create("reporte_conurbano_secundarios_".$date, function ($excel) use ($secundarios_conurbano) {
+			$excel->setTitle("Reporte Escuelas Secundarios Conurbano");
+			$excel->sheet("Escuelas Secundarios Conurbano", function ($sheet) use ($secundarios_conurbano) {
+				$sheet->loadView('exports.conurbano.secundario.reporte_excel_conurbano_secundario')->with('secundarios_conurbano', $secundarios_conurbano);
+			})->download('xls');
+			return back();
+		});
+	}
+	
 	
 	
 	/**

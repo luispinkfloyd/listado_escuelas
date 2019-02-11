@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\superiores_conurbano;
 use DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SuperiorConurbanoController extends Controller
 {
@@ -148,6 +149,52 @@ class SuperiorConurbanoController extends Controller
 		
 		
 	}
+	
+	
+	
+	public function export_excel(Request $request){
+		
+		$superiores_conurbano = superiores_conurbano::orderBy('nombre');
+		
+			
+		if(isset($request->partido_excel) && $request->partido_excel != 'Todos') {
+			
+			$superiores_conurbano = $superiores_conurbano->where('partido',$request->partido_excel);
+			
+		}
+		
+		if(isset($request->localidad_excel) && $request->localidad_excel != 'Todas') {
+			
+			$superiores_conurbano = $superiores_conurbano->where('localidad',$request->localidad_excel);
+			
+		}
+		
+		if(isset($request->sector_excel) && $request->sector != 'Todos'){
+			
+			$superiores_conurbano = $superiores_conurbano->where('sector',$request->sector_excel);
+			
+		}
+	
+		
+		if(isset($request->busqueda_excel) && $request->busqueda_excel != ''){
+			
+			$superiores_conurbano = $superiores_conurbano->whereRaw("(f_limpiar_acentos(nombre)::text ilike f_limpiar_acentos('%".$request->busqueda_excel."%'))");
+															
+		}
+		
+		$superiores_conurbano = $superiores_conurbano->get();
+		
+		$date = date('dmYGis');
+		Excel::create("reporte_conurbano_superiores_".$date, function ($excel) use ($superiores_conurbano) {
+			$excel->setTitle("Reporte Escuelas Superiores Conurbano");
+			$excel->sheet("Escuelas Superiores Conurbano", function ($sheet) use ($superiores_conurbano) {
+				$sheet->loadView('exports.conurbano.superior.reporte_excel_conurbano_superior')->with('superiores_conurbano', $superiores_conurbano);
+			})->download('xls');
+			return back();
+		});
+	}
+	
+	
 	
 
     /**
