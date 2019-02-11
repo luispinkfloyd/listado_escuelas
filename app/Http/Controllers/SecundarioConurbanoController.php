@@ -156,7 +156,7 @@ class SecundarioConurbanoController extends Controller
 			
 		if(isset($request->partido_excel) && $request->partido_excel != 'Todos') {
 			
-			$secundarios_conurbano = $secundarios_conurbano->where('parido',$request->partido_excel);
+			$secundarios_conurbano = $secundarios_conurbano->where('partido',$request->partido_excel);
 			
 		}
 		
