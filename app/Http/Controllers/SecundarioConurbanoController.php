@@ -166,7 +166,7 @@ class SecundarioConurbanoController extends Controller
 			
 		}
 		
-		if(isset($request->sector_excel) && $request->sector != 'Todos'){
+		if(isset($request->sector_excel) && $request->sector_excel != 'Todos'){
 			
 			$secundarios_conurbano = $secundarios_conurbano->where('sector',$request->sector_excel);
 			

@@ -157,14 +157,14 @@ if(isset($partido_selected) || isset($ambito_selected) || isset($sector_selected
     <div class="container" style="margin:auto;width:95%;background-color:rgba(255,255,255,1.00)">    
         <hr style="border:#3c415e solid 1px">
         @foreach($secundarios_conurbano as $secundario_conurbano)
-                <div class="row form-group" style="padding-left:10px;padding-top:10px">
+                <div class="row" style="padding-left:10px;padding-top:10px">
                     <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">Nombre:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->nombre}}</b>
                     </div>
-                    <div class="col-sm-auto">
+                    <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">CUE:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->cue}}</b>
                     </div>
-                    <div class="col-sm-auto">
+                    <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">Sector:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->sector}}</b>
                     </div>
                 </div>
@@ -172,14 +172,14 @@ if(isset($partido_selected) || isset($ambito_selected) || isset($sector_selected
                     <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">Ámbito:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->ambito}}</b>
                     </div>
-                    <div class="col-sm-auto">
+                    <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">Partido:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->partido}}</b>
                     </div>
                     <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">Localidad:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->localidad}}</b>
                     </div>
                 </div>
-                <div class="row form-group" style="padding-left:10px">
+                <div class="row" style="padding-left:10px">
                     <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">Domicilio:&nbsp;&nbsp;</label><b style="color:#364e68">{{$secundario_conurbano->domicilio}}</b>
                     </div>

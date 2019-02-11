@@ -35,11 +35,71 @@
 		  justify-content: center;
 		  margin:auto;
 		}
+		.btn-superior { 
+		  color: #ffffff; 
+		  background-color: #FFB459; 
+		  border-color: #1C1100; 
+		} 
+		 
+		.btn-superior:hover, 
+		.btn-superior:focus, 
+		.btn-superior:active, 
+		.btn-superior.active, 
+		.open .dropdown-toggle.btn-superior { 
+		  color: #ffffff; 
+		  background-color: #FF9900; 
+		  border-color: #1C1100; 
+		} 
+		 
+		.btn-superior:active, 
+		.btn-superior.active, 
+		.open .dropdown-toggle.btn-superior { 
+		  background-image: none; 
+		} 
+		 
+		.btn-superior.disabled, 
+		.btn-superior[disabled], 
+		fieldset[disabled] .btn-superior, 
+		.btn-superior.disabled:hover, 
+		.btn-superior[disabled]:hover, 
+		fieldset[disabled] .btn-superior:hover, 
+		.btn-superior.disabled:focus, 
+		.btn-superior[disabled]:focus, 
+		fieldset[disabled] .btn-superior:focus, 
+		.btn-superior.disabled:active, 
+		.btn-superior[disabled]:active, 
+		fieldset[disabled] .btn-superior:active, 
+		.btn-superior.disabled.active, 
+		.btn-superior[disabled].active, 
+		fieldset[disabled] .btn-superior.active { 
+		  background-color: #FFB459; 
+		  border-color: #1C1100; 
+		} 
+		 
+		.btn-superior .badge { 
+		  color: #FFB459; 
+		  background-color: #ffffff; 
+		}
+		@media screen and ( max-width: 768px ){
+
+			li.page-item {
+		
+				display: none;
+			}
+		
+			.page-item:first-child,
+			.page-item:last-child,
+			.page-item.active {
+		
+				display: block;
+			}
+		}
+		
 	</style> 
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel" style="background-color:#5c7893">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel" style="background-color:#1d5464">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                 	<img src="{{ asset('img/untref.png')}}" height="50" class="d-inline-block align-top" style="padding-right:10px">

@@ -128,18 +128,18 @@ if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected)
     <div class="container" style="margin:auto;width:95%;background-color:rgba(255,255,255,1.00)">    
         <hr style="border:#3c415e solid 1px">
         @foreach($superiores_caba as $superior_caba)
-                <div class="row form-group" style="padding-left:10px;padding-top:10px">
+                <div class="row" style="padding-left:10px;padding-top:10px">
                     <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">Nombre:&nbsp;&nbsp;</label><b style="color:#364e68">{{$superior_caba->nombre}}</b>
                     </div>
-                    <div class="col-sm-auto">
+                    <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">CUE:&nbsp;&nbsp;</label><b style="color:#364e68">{{$superior_caba->cue}}</b>
                     </div>
-                    <div class="col-sm-auto">
+                    <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">Sector:&nbsp;&nbsp;</label><b style="color:#364e68">{{$superior_caba->sector}}</b>
                     </div>
                 </div>
-                <div class="row form-group" style="padding-left:10px">
+                <div class="row" style="padding-left:10px">
                     <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">Domicilio:&nbsp;&nbsp;</label><b style="color:#364e68">{{$superior_caba->domicilio}}</b>
                     </div>
@@ -149,7 +149,7 @@ if(isset($comuna_selected) || isset($ambito_selected) || isset($sector_selected)
                     <div class="col-auto form-group">
                         <label class="font-italic" style="color:#738598">Cód. Localidad:&nbsp;&nbsp;</label><b style="color:#364e68">{{$superior_caba->codigo_localidad}}</b>
                     </div>
-                    <div class="col-sm-auto">
+                    <div class="col-sm-auto form-group">
                         <label class="font-italic" style="color:#738598">Comuna:&nbsp;&nbsp;</label><b style="color:#364e68">{{$superior_caba->comuna}}</b>
                     </div>
                 </div>

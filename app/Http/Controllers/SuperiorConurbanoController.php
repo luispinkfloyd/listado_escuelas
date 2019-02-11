@@ -169,7 +169,7 @@ class SuperiorConurbanoController extends Controller
 			
 		}
 		
-		if(isset($request->sector_excel) && $request->sector != 'Todos'){
+		if(isset($request->sector_excel) && $request->sector_excel != 'Todos'){
 			
 			$superiores_conurbano = $superiores_conurbano->where('sector',$request->sector_excel);
 			
