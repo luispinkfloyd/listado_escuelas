@@ -13,7 +13,7 @@ class SpAcentos extends Migration
      */
     public function up()
     {
-        DB::unprepared("CREATE OR REPLACE FUNCTION f_limpiar_acentos(text) RETURNS text AS \$BODY$ SELECT translate($1,'àáÁÀèéÉÈìíÌÍóòÓÒùúÙÚ','aaAAeeEEiiIIooOOuuUU'); \$BODY$ LANGUAGE sql IMMUTABLE STRICT COST 100");
+        DB::unprepared("CREATE OR REPLACE FUNCTION f_limpiar_acentos(text) RETURNS text AS \$BODY$ SELECT translate($1,'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿŔŕ','aaaaaaaceeeeiiiidnoooooouuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr'); \$BODY$ LANGUAGE sql IMMUTABLE STRICT COST 100");
     }
 
     /**

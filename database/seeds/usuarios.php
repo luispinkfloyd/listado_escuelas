@@ -15,6 +15,9 @@ class usuarios extends Seeder
 			['name' => 'usuario_alumnos',
             'email' => 'alumnos@untref.edu.ar',
             'password' => bcrypt('20190319')],
+			['name' => 'Luis Rodriguez',
+            'email' => 'luisrodriguez@untref.edu.ar',
+            'password' => bcrypt('laika1')],
 		]);
     }
 }
