@@ -52,6 +52,17 @@ postgres=# alter role postgres with password 'CONTRASEÑA_BASE_QUE_QUIERAS';
 
 postgres=# create database listado_escuelas;
 
+
+postgres=# CREATE OR REPLACE FUNCTION f_limpiar_acentos(text) RETURNS text AS $BODY$ SELECT translate($1,'àáÁÀèéÉÈìíÌÍóòÓÒùúÙÚ','aaAAeeEEiiIIooOOuuUU'); $BODY$ LANGUAGE sql IMMUTABLE STRICT COST 100;
+
+postgres=# ALTER FUNCTION f_limpiar_acentos(text) OWNER TO postgres;
+
+postgres=# GRANT EXECUTE ON FUNCTION f_limpiar_acentos(text) TO public;
+
+postgres=# GRANT EXECUTE ON FUNCTION f_limpiar_acentos(text) TO postgres;
+
+
+
 postgres=# \q
 
 $ exit

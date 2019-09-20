@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
 		$this->call(superiores_caba::class);
 		$this->call(secundarios_conurbano::class);
 		$this->call(superiores_conurbano::class);
-		$this->call(usuarios::class);
+		//$this->call(usuarios::class);
     }
 }

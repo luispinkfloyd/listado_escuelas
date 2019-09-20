@@ -96,7 +96,33 @@
 				display: block;
 			}
 		}
-		
+		html {
+		  height: 100%;
+		  box-sizing: border-box;
+		}
+
+		*,
+		*:before,
+		*:after {
+		  box-sizing: inherit;
+		}
+		body {
+		  position: relative;
+		  margin: 0;
+		  min-height: 100%;
+		}
+		#app {
+		  margin: 0 auto;
+		  padding-bottom: 2rem;
+		}
+		.footer {
+		  position: absolute;
+		  right: 0;
+		  bottom: 0;
+		  left: 0;
+		  padding: 1rem;
+		  text-align: center;
+		}
 	</style> 
 </head>
 <body>
@@ -155,6 +181,11 @@
         <main class="py-4">
             @yield('content')
         </main>
+		<footer class="footer py-2 bg-dark text-white">
+			<div class="container text-center">
+			  <p>© 2018 Equipo de TI UNTREF</p>
+			</div>
+		</footer>
     </div>
     @yield('script')
 </body>
