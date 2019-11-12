@@ -2,29 +2,31 @@
 
 # Instalación de componentes necesarios para correr la aplicación
 
-Debian 8( jessie ) o  9( stretch )
+Debian 8( jessie ) o  9( stretch ) o 10( buster )
 
 # Repositorio de postgresql
 
-$ nano /etc/apt/sources.list.d/pgdg.list
+#$ nano /etc/apt/sources.list.d/pgdg.list
 
-deb http://apt.postgresql.org/pub/repos/apt/ VERSION_DEBIAN-pgdg main
+#deb http://apt.postgresql.org/pub/repos/apt/ VERSION_DEBIAN-pgdg main
 
-CTRL o
+#CTRL o
 
-ENTER
+#ENTER
 
-CTRL x
+#CTRL x
+
+$ echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 $ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 
 # Repositorio de PHP
 
-$ apt-get install apt-transport-https lsb-release ca-certificates
-
-$ wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+$ sudo apt-get install apt-transport-https lsb-release ca-certificates
 
 $ echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
+
+$ wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 
 # Actualizar repositorios
 
@@ -34,11 +36,11 @@ $ sudo apt-get update
 
 $ sudo apt-get install apache2
 
-# PHP versión 7.2
+# PHP versión 7.3
 
-$ sudo apt-get install -y php7.2 php7.2-fpm libapache2-mod-php7.2 php7.2-cli php7.2-curl php7.2-sqlite3 php7.2-gd php7.2-xml php7.2-mbstring php7.2-common php7.2-pgsql php7.2-soap php7.2-json php7.2-opcache php7.2-readline php7.2-mysql
+$ sudo apt-get install -y php7.3 php7.3-fpm libapache2-mod-php7.3 php7.3-cli php7.3-curl php7.3-sqlite3 php7.3-gd php7.3-xml php7.3-mbstring php7.3-common php7.3-pgsql php7.3-soap php7.3-json php7.3-opcache php7.3-readline php7.3-mysql php7.3-mcrypt php7.3-zip php-apcu
 
-# Postgresql versión 9.6 o más
+# Postgresql última versión
 
 $ sudo apt-get install postgresql postgresql-contrib
 
@@ -97,11 +99,17 @@ $ git clone https://github.com/luispinkfloyd/listado_escuelas.git
 
 $ cd listado_escuelas
 
+$ chown -R www-data:www-data ./public
+
+$ chown -R www-data:www-data ./vendor
+
+$ chown -R www-data:www-data ./storage
+
 $ chmod -R 755 ./
 
-$ chmod -R 777 ./public/
+$ chmod -R 777 ./public
 
-$ chmod -R 777 ./storage/
+$ chmod -R 777 ./storage
 
 $ composer install
 
@@ -121,7 +129,6 @@ DB_USERNAME=postgres
 
 DB_PASSWORD=CONTRASEÑA_BASE
 
-
 CTRL o
 
 ENTER
@@ -139,13 +146,3 @@ $ sudo /etc/init.d/apache2 restart
 Ingresar en http://DIRECCION_IP_SERVIDOR/listado_escuelas 
 
 Registrarse e iniciar
-
-
-
-
-
-
-
-
-
-
